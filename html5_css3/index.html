@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/white.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+	<link rel="stylesheet" href="plugin/reveal-pointer/pointer.css" />
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# HTML 5 and CSS 3
+
+- by: Roy Canseco MSEE, PhD Cand. CS
+- updated: May 2023
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# HTML
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## DOM
+
+<img src="Pasted image 20230518135623.png" alt="" style="object-fit: scale-down">
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### The HTML DOM Tree of Objects
+
+
+<img src="2U1-CS3/media/Pasted image 20230519121541.png" alt="" style="object-fit: scale-down">
+
+<small> w3schools - https://www.w3schools.com/js/js_htmldom.asp</small>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Question:  Can you pick which parts of the code are *Elements*, *Attributes*, and *Texts*?
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>My title</title>
+	<meta charset="UTF-8">
+	<meta name="author" content="My Name">
+	<meta name="description" content="practice js while improving the template with meta tags and a favicon ">
+	<meta name="keywords" content="PSHS-MC, CS3, Q1W2, meta, favicon">
+	<meta name="viewport" content="width=device-width">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+	<h1> My header </h1>
+	<a href="#"> My link </a>
+</body>
+</html>
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+-   We can change all the HTML elements in the page
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->  We can change all the HTML attributes in the page
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->  We can change all the CSS styles in the page
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->  We can remove existing HTML elements and attributes
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->  We can add new HTML elements and attributes
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->  We can react to all existing HTML events in the page
+- &shy;<!-- .element: class="fragment" data-fragment-index="6" -->  We can create new HTML events in the page
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+> Heading 
+
+
+```html
+<header>
+	<h1>This is our first page!</h1>
+</header>
+```
+
+<header>
+	<h1>This is our first page!</h1>
+</header>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+##  paragraphs
+
+
+```html 
+<p> This is some text. </p>
+<p>It is really long. We want to break this  
+into paragraphs so it looks more like a document.</p>
+```
+
+<p> This is some text. </p>
+<p>It is really long. We want to break this  
+into paragraphs so it looks more like a document.</p>
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Ordered List
+
+```html
+<ol>  
+	<li>First</li>  
+	<li>Second</li>  
+	<li>Third</li>  
+</ol>
+```
+<ol>  
+<li>First</li>  
+<li>Second</li>  
+<li>Third</li>  
+</ol>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Unordered List
+
+```html 
+<ul>  
+	<li>An item</li>  
+	<li>Another item</li>  
+	<li>Yet another item</li>  
+</ul>
+```
+
+• An item  
+• Another item  
+• Yet another item
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Definition List
+
+
+```html
+<dl>  
+	<dt>Coffee</dt>  
+		<dd>Bean-based caffeinated  
+		beverage </dd>  
+	<dt>Tea</dt>  
+		<dd>Leaf-based caffeinated  
+		beverage</dd>  
+</dl>
+```
+
+<dl>  
+<dt>Coffee</dt>  
+<dd>Bean-based caffeinated  
+beverage </dd>  
+<dt>Tea</dt>  
+<dd>Leaf-based caffeinated  
+beverage</dd>  
+</dl>
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 50%; top: 0%; height: 10%; width: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+## Tables
+</div>
+
+<div class="" style="position: absolute; left: 0%; top: 0%; height: 30%; width: 75%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+ 
+<pre><code>
+<style>
+ th, td, tr{
+  padding: 5px;
+  border: 1px solid #333;
+}
+</style>
+</pre> </code>
+</div>
+
+
+<div class="" style="position: absolute; left: 0%; top: 30%; height: 70%; width: 75%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+<table>  
+	<tr>  
+		<th>ID</th><th>First Name</th>
+		<th>Last Name</th>  
+	</tr>  
+	<tr>  
+		<th>1</th><td>Miguel</td><td>Tan</td>  
+	</tr>  
+	<tr>  
+		<th>2</th><td>Mary</td><td>Reyes</td>  
+	</tr>  
+</table>
+</code> </pre>
+
+</div>
+
+<div class="" style="font-size: 0.5em; position: absolute; left: 70%; top: 0%; height: 100%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<table>  
+	<tr>  
+		<th>ID</th><th>First Name</th>
+		<th>Last Name</th>  
+	</tr>  
+	<tr>  
+		<th>1</th><td>Miguel</td><td>Tan</td>  
+	</tr>  
+	<tr>  
+		<th>2</th><td>Mary</td><td>Reyes</td>  
+	</tr>  
+</table>
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 0%; top: 25%; height: 50%; width: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<pre><code>
+<table>  
+	<caption>This is our table</caption>  
+	<tr>  
+		<td>First Col</td>
+		<td>Second Col</td>
+		<td>Third Col</td>  
+	</tr>  
+	<tr>  
+		<td>1</td><td>2</td><td>3</td>  
+	</tr>  
+	<tr>  
+		<td>4</td><td>5</td><td>6</td>  
+	</tr>  
+</table>
+</code> </pre>
+
+</div>
+
+<div class="" style="font-size: 0.5em; position: absolute; left: 70%; top: 0%; height: 100%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<table>  
+<caption>This is our table</caption>  
+<tr>  
+<td>First Col</td><td>Second Col</  
+td><td>Third Col</td>  
+</tr>  
+<tr>  
+<td>1</td><td>2</td><td>3</td>  
+</tr>  
+<tr>  
+<td>4</td><td>5</td><td>6</td>  
+</tr>  
+</table>
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="font-size: 1em; position: absolute; left: 0%; top: 20%; height: 25%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+<table>  
+	<tr>  
+		<th>ID</th><th>First Name</th><th>Mon</th><th>Tues</th>
+		<th>Wed</th><th>Thur</th><th>Fri</th>  
+	</tr>  
+	<tr>  
+		<th>1</th><td>John</td><td colspan ="2">work-work
+		 </td><td></td><td rowspan="2">closed</td><td></td>  
+	</tr>  
+	<tr>  
+		<th>2</th><td>Jane</td><td></td><td></td><td>work</td>
+		<td>work</td>  
+	</tr>  
+</table>
+</code></pre>
+</div>
+
+<div class="" style="font-size: 0.7em; position: absolute; left: 0%; top: 65%; height: 25%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<style>
+table, th, td{
+	border: 1px solid black;
+}
+</style>
+<table>  
+	<tr>  
+		<th>ID</th><th>First Name</th><th>Mon</th><th>Tues</th><th>Wed</th><th>Thur</th><th>Fri</th>  
+	</tr>  
+	<tr>  
+		<th>1</th><td>John</td><td colspan ="2">work-work </td><td></td><td rowspan="2">closed</td><td></td>  
+	</tr>  
+	<tr>  
+		<th>2</th><td>Jane</td><td></td><td></td><td>work</td><td>work</td>  
+	</tr>  
+</table>
+
+</div>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Figure
+
+```html
+<figure>  
+	<img src="calendar.png"></img>  
+	<figcaption>Figure 1</figcaption>  
+</figure>
+```
+
+<figure>  
+	 <img src="2U1-CS3/media/calendar.png"></img>  
+</figure>
+<figcaption>Figure 1</figcaption>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Favicon
+
+
+```html
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+```
+
+ - https://icons8.com/icons/set/popular - choose one for free
+- https://www.favicon.cc/ - create  your own
+- canva - design the elements
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Canvas
+
+HTMLCanvas is a container for graphics
+- can draw text
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->can draw graphics
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->can be animated
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->can be interactive
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->can be used in games
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Create a canvas
+
+```html
+<canvas id="myCanvas" width="200" height="100"></canvas>
+```
+
+```css
+#myCanvas {
+	border: 1px solid #000000;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Draw a rectangle
+
+```js
+<script>  
+var canvas = document.getElementById("myCanvas");  
+var ctx = canvas.getContext("2d");  
+ctx.fillStyle = "#FF0000";  
+ctx.fillRect(0, 0, 150, 75);  
+__SCRIPT_END__
+```
+
+- (0,0) is the coordinate for the upper left corner
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Draw a line
+
+```js
+var canvas = document.getElementById("myCanvas");  
+var ctx = canvas.getContext("2d");  
+ctx.moveTo(0, 0);  
+ctx.lineTo(200, 100);  
+ctx.stroke();
+```
+
+- `stoke()` is the ink method
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Draw a circle
+
+```js
+var canvas = document.getElementById("myCanvas");  
+var ctx = canvas.getContext("2d");  
+ctx.beginPath();  
+ctx.arc(95, 50, 40, 0, 2 * Math.PI);  
+ctx.stroke();
+```
+
+-    arc(center_x, center_y, radius, start_rad, end_rad)
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+##  Footer
+
+
+```html
+<footer>  
+	&copy; 2013 Your Name Here  
+</footer>
+```
+
+<footer>  
+&copy; 2013 Your Name Here  
+</footer>
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+> no paragraphs
+
+```html
+This is some text. It is really long. 
+
+We want to break this  
+into paragraphs so it looks more like a document.
+```
+This is some text. It is really long. We want to break this  
+into paragraphs so it looks more like a document
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+##  Address
+
+```html
+<address>  
+	Article by <a href="mailto:professor@school.edu">
+		Prof. Essor</a>.<br>  
+	Fredonia, NY<br>  
+	USA  
+</address>
+```
+
+<address>  
+Article by <a href="mailto:professor@school.  
+edu">Prof. Essor</a>.<br>  
+Fredonia, NY<br>  
+USA  
+</address>
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Cite
+
+```html
+<img src="scream.png">  
+<p><cite>The Scream</cite> E. MunChapter  
+1893.</p>
+```
+
+
+<img src="scream.png" alt="" style="object-fit: scale-down">
+
+<p><cite>The Scream</cite> E. MunChapter  
+1893.</p>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Mark
+
+```html
+<p>Here is a sentence with some  
+<mark>highlighted</mark> text.</p>
+```
+
+<p>Here is a sentence with some  
+<mark>highlighted</mark> text.</p>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Entities &trade;
+
+```html
+<p> &lt; &gt; &amp; &nbsp; &nbsp; &nbsp; &copy; &reg; &trade; </p> 
+<p> &#60; &#62; &#38; &#160; &#160; &#160; &#169; &#174; &#8482;</p>
+```
+
+<p> &lt; &gt; &amp; &nbsp; &nbsp; &nbsp; &copy; &reg; &trade; </p> 
+<p> &#60; &#62; &#38; &#160; &#160; &#160; &#169; &#174; &#8482;</p>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## YouTube Video
+
+```html
+<iframe width="420" height="315"  
+			src="https://www.youtube.com/embed/
+				8dWL3wF_OMw?autoplay=0&mute=1">  
+</iframe>
+```
+
+<iframe width="420" height="315"  
+			src="https://www.youtube.com/embed/8dWL3wF_OMw?autoplay=0&mute=1">  
+</iframe>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Progress Bar
+
+```html
+<progress value="26" max="100"></progress>
+```
+
+<progress value="26" max="100"></progress>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Link to within the page
+
+
+```html
+Some text here.  
+<a href="#ourDestination">Click here to go  
+further down.</a>  
+Some more text.  
+Even more text!  
+<a name="ourDestination">  
+This is where we want to "jump" to.
+```
+
+
+Some text here.  
+<a href="#ourDestination">Click here to go  
+further down.</a>  
+Some more text.  
+Even more text!  
+<a name="ourDestination">  
+This is where we want to "jump" to.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Button
+
+```html
+<button type="button">Click Here!</button>  
+<button type="button"><img src="our_image.png"></img>  
+</button>
+```
+
+<button type="button">Click Here!</button>  
+<img src="our_image.png" alt="" style="object-fit: scale-down">
+
+</button>
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<grid absolute="true" drag="100 100" drop="0 0">
+<div class="" style="position: absolute; left: 0%; top: 0%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+## input
+
+```
+<input id="myTextField"></input>
+```
+
+```javascript
+let textFieldValue = document.getElementById("myTextField").value;
+```
+
+
+<input ></input>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  password
+```html
+<input type="password"  id="password" placeholder="Your password" ></input>
+```
+```javascript
+let textFieldValue = document.getElementById("password").value;
+```
+
+<input type="password" id="password" placeholder="Your password" ></input>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Text Area
+
+```
+<textarea rows="20" cols="80" id="ta"></textarea>
+```
+<textarea rows="20" cols="80" id="ta"></textarea>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  numbers
+
+```html
+<input type="number"  placeholder="Your age" ></input>
+<input type="number" placeholder="Your age" min="13" max="120" ></input>
+<input type="number" value="15"  min="10" max="50" step="5" ></input>
+```
+
+<input type="number" name="age" placeholder="Your age" ></input>
+<input type="number" placeholder="Your age" min="13" max="120" ></input>
+<input type="number" value="15"  min="10" max="50" step="5" ></input>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### range
+
+```
+<input type="range" id="age" min="0" max="100" value="30" ></input>
+<input type="range" id="age" min="0" max="100" step="10" ></input>
+```
+
+<input type="range" id="age" min="0" max="100" value="30" ></input>
+<input type="range" id="age" min="0" max="100" step="20" ></input>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Calendar and Time
+
+```html
+<input type="date" name="date"></input>  
+<input type="week" name="week"></input>  
+<input type="month" name="month"></input>
+<input type="time" name="time"></input>  
+<input type="datetime" name="dateTime"></input>  
+<input type="datetime-local" name="localDateTime"></input>
+```
+
+<input type="date" name="date"></input>  
+<input type="time" name="time"></input>  
+<input type="datetime-local" name="localDateTime"></input>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### color
+
+```
+<input type="color" name="car-color" value="#000000" ></input>
+```
+<input type="color" name="car-color" value="#000000" ></input>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### radio buttons
+
+```html
+<input type="radio" name="color" value="yellow" ></input>
+yellow 
+<input type="radio" name="color" value="red" ></input>
+red 
+<input type="radio" name="color" value="blue" ></input>
+blue 
+```
+
+<pre> <code>
+let radios = document.getElementsByName('color');
+let selectedValue;
+for (var i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+        selectedValue = radios[i].value;
+        break;
+    }
+}
+</code> </pre>
+
+
+
+<input type="radio" name="color" value="yellow" ></input>
+yellow 
+<input type="radio" name="color" value="red" ></input>
+red 
+<input type="radio" name="color" value="blue" ></input>
+blue
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  checkbox
+
+```
+<input type="checkbox" name="color" value="yellow" ></input>
+yellow <br>
+<input type="checkbox" name="color" value="red" ></input>
+red <br>
+<input type="checkbox" name="color" value="blue" ></input>
+blue <br>
+```
+
+
+<pre> <code>
+var radios = document.getElementsByName('color');
+var selectedValue;
+for (var i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+        selectedValue = radios[i].value;
+        // do something with the choice
+        break;
+    }
+}
+
+</code></pre>
+
+
+<input type="checkbox" name="color" value="yellow" ></input>
+yellow
+<input type="checkbox" name="color" value="red" ></input>
+red 
+<input type="checkbox" name="color" value="blue" ></input>
+blue
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Dropdown menu
+
+```
+<select name="color">
+  <option value="red">Red</option>
+  <option value="yellow">Yellow</option>
+</select>
+```
+
+```javascript
+let choice = document.getElementById('select').value;
+```
+
+<select name="color">
+  <option value="red">Red</option>
+  <option value="yellow">Yellow</option>
+</select>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### disabled  dropdown option
+
+```
+<select name="color">
+  <option value="red" disabled>Red</option>
+  <option value="yellow">Yellow</option>
+</select>
+```
+
+<select name="color">
+  <option value="red" disabled>Red</option>
+  <option value="yellow">Yellow</option>
+</select>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### absent option
+
+```
+<select name="color">
+  <option value="">None</option>
+  <option value="red">Red</option>
+  <option value="yellow">Yellow</option>
+</select>
+```
+
+<select name="color">
+  <option value="">None</option>
+  <option value="red">Red</option>
+  <option value="yellow">Yellow</option>
+</select>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### option groupings
+
+```
+<select name="color">
+  <optgroup label="Primary">
+    <option value="red">Red</option>
+    <option value="yellow">Yellow</option>
+    <option value="blue">Blue</option>
+  </optgroup>
+  <optgroup label="Others">
+    <option value="green">Green</option>
+    <option value="pink">Pink</option>
+  </optgroup>
+</select>
+```
+
+<select name="color">
+  <optgroup label="Primary">
+    <option value="red">Red</option>
+    <option value="yellow">Yellow</option>
+    <option value="blue">Blue</option>
+  </optgroup>
+  <optgroup label="Others">
+    <option value="green">Green</option>
+    <option value="pink">Pink</option>
+  </optgroup>
+</select>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Forms
+
+```html
+<form name="" id="" action="" method="">  
+	<input type="text" placeholder="Your First Name" autofocus  
+name="name" ></input>  
+	<input type="range" min="10" max="50" step="5" value="30">
+	<input type="number" min="10" max="50" step="5" value="30">
+</form>
+```
+
+<form name="" id="" action="" method="">  
+<input type="text" placeholder="Your First Name" autofocus  
+name="name" ></input>  
+<input type="range" min="10" max="50" step="5" value="30">
+	<input type="number" min="10" max="50" step="5" value="30">
+</form>
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# CSS
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## CSS Style Syntax
+
+<img src="Pasted image 20230518135907.png" alt="" style="object-fit: scale-down">
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 0%; top: 0%; height: 100%; width: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+<style>  
+	.todo1 { background-color:red; }  
+	.completed1 { background-color: green; }  
+	div {color:white;}
+</style>
+<div class="todo1">  
+	<ul>  
+		<li>Check the mail</li>  
+		<li>Go to the store</li>  
+		<li>Take the dog to the vet </li>  
+	</ul>  
+</div>  
+<div class="completed1">  
+	<ul>  
+		<li>Rent a movie</li>  
+		<li>Make grocery list</li>  
+		<li>Make vet appointment</li>  
+	</ul>  
+</div>
+</code></pre>
+
+</div>
+
+
+<div class="" style="font-size: 0.75em; position: absolute; left: 70%; top: 0%; height: 100%; width: 30%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+<style>  
+	.todo1 { background-color:red; 
+		color:white;}  
+	.completed1 { background-color: green; 
+		color:white;} 
+</style>
+<div class="todo1">  
+	<ul>  
+		<li>Check the mail</li>  
+		<li>Go to the store</li>  
+		<li>Take the dog to the vet </li>  
+	</ul>  
+</div>  
+<div class="completed1">  
+	<ul>  
+		<li>Rent a movie</li>  
+		<li>Make grocery list</li>  
+		<li>Make vet appointment</li>  
+	</ul>  
+</div>
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 0%; top: 0%; height: 100%; width: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+<style>  
+.todo {  
+	background-color:red;  
+	color:white;
+	font-size:large;
+}  
+.completed {  
+	background-color: green;  
+	color:white;
+	font-size:small;
+}  
+.completed ul {
+	text-decoration: line-through;  
+}  
+.todo:before{  
+	content:"To Do:";  
+	background-color:yellow;  
+	color:red;  
+	font-weight:bold;  
+}  
+</style>  
+
+<div id="today" class="todo2">  
+	<ul>  
+		<li>Check the mail</li>  
+		<li> Go to the store</li>  
+	</ul>  
+</div>  
+<div id="tomorrow" class="todo2">  
+	<ul>  
+		<li>Take the dog to the  vet </li>  
+		<li>Take the dog to the  vet </li> 
+	</ul>  
+</div>  
+<div id="yesterday"  
+class="completed2">  
+	<ul>  
+		<li>Rent a movie</li>  
+	</ul>  
+</div>  
+<div id="lastWeek"  
+class="completed2">  
+	<ul>  
+		<li>Make grocery list</li>
+		<a href="http://www.dunkirkanimalclinic.com/">
+		<li>Make  vet appointment</li></a>  
+	</ul>  
+</div>
+</code> </pre>
+</div>
+
+
+
+<div class="" style="position: absolute; left: 70%; top: 15%; height: 70%; width: 30%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+<style>  
+.todo {  
+	background-color:red;  
+	color:white;
+	font-size:4vw;
+}  
+.completed {  
+	background-color: green;  
+	color:white;
+	font-size:3vw;
+}  
+.completed ul {
+	text-decoration: line-through;  
+}  
+.todo:before{  
+	content:"To Do:";  
+	background-color:yellow;  
+	color:red;  
+	font-weight:bold;  
+}  
+</style>  
+<div id="today" class="todo">  
+	<ul>  
+		<li>Check the mail</li>  
+		<li> Go to the store</li>  
+	</ul>  
+</div>  
+<div id="tomorrow" class="todo">  
+	<ul>  
+		<li>Take the dog to the vet </li>  
+	</ul>  
+</div>  
+<div id="yesterday"  
+class="completed">  
+	<ul>  
+		<li>Rent a movie</li>  
+	</ul>  
+</div>  
+<div id="lastWeek"  
+class="completed">  
+	<ul>  
+		<li>Make grocery list</li>
+		<a href="http://www.dunkirkanimalclinic.com/">
+		<li>Make  vet appointment</li></a>  
+	</ul>  
+</div>
+
+</div>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Box Model
+
+<img src="Pasted image 20230518151241.png" alt="" style="object-fit: scale-down">
+
+
+```
+*  {
+	  box-sizing: border-box;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="has-light-background" style="background-color: gray; position: absolute; left: 0%; top: 0%; height: 100%; width: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+<style>  
+	p.one {  
+		border-style:solid;  
+		border-width:5px;  
+	}  
+	p.two {  
+		border-style:groove;  
+		border-width:medium;  
+	}  
+	p.three {  
+		border-style:dotted;  
+		border-width:1px;  
+		border-color:red;  
+	}  
+</style>  
+
+<p class="one">Some text.</p>  
+<p class="two">Some more text.</p>  
+<p class="three"
+
+</code> </pre>
+</div>
+
+<div class="" style="font-size: 0.7em; position: absolute; left: 70%; top: 0%; height: 100%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<style>  
+p.one {  
+	border-style:solid;  
+	border-width:5px;  
+}  
+p.two {  
+	border-style:groove;  
+	border-width:medium;  
+}  
+p.three {  
+	border-style:dotted;  
+	border-width:1px;  
+	border-color:red;  
+}  
+</style>  
+<p class="one">Some text.</p>  
+<p class="two">Some more text.</p>  
+<p class="three">Even more text.</p>
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Border Styles
+
+<img src="2U1-CS3/media/Pasted image 20230519155309.png" alt="" style="object-fit: scale-down">
+
+<small> https://flaviocopes.com/book/css/ </small>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="has-light-background" style="background-color: gray; position: absolute; left: 0%; top: 0%; height: 100%; width: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+	<style>
+		p.one2 , p.two2 , p.three2{
+			padding:30px;
+		}
+	</style>
+</code> </pre>
+</div>
+
+
+<div class="" style="font-size: 0.7em; position: absolute; left: 70%; top: 0%; height: 100%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<style>  
+p.one2 , p.two2 , p.three2{
+	padding:30px;
+}
+p.one2 {  
+	border-style:solid;  
+	border-width:5px;  
+}  
+p.two2 {  
+	border-style:groove;  
+	border-width:medium;  
+}  
+p.three2 {  
+	border-style:dotted;  
+	border-width:1px;  
+	border-color:red;  
+}  
+</style>  
+<p class="one2">Some text.</p>  
+<p class="two2">Some more text.</p>  
+<p class="three2">Even more text.</p>
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="has-light-background" style="background-color: gray; position: absolute; left: 0%; top: 0%; height: 100%; width: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+	<style>
+		p.one2 , p.two2 , p.three2{
+			padding-left:50px;
+			margin-bottom:50px;
+		}
+	</style>
+</code> </pre>
+</div>
+
+
+<div class="" style="font-size: 0.7em; position: absolute; left: 70%; top: 0%; height: 100%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<style>  
+p.one3 , p.two3 , p.three3{
+	padding-left:50px;
+	margin-bottom:50px;
+}
+p.one3 {  
+	border-style:solid;  
+	border-width:5px;  
+}  
+p.two3 {  
+	border-style:groove;  
+	border-width:medium;  
+}  
+p.three3 {  
+	border-style:dotted;  
+	border-width:1px;  
+	border-color:red;  
+}  
+</style>  
+<p class="one3">Some text.</p>  
+<p class="two3">Some more text.</p>  
+<p class="three3">Even more text.</p>
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="has-light-background" style="background-color: gray; position: absolute; left: 0%; top: 0%; height: 100%; width: 65%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+	<style>
+		p.one2 , p.two2 , p.three2{
+			padding:50px 30px 50px 5px;
+			margin:50px;
+			font-size:1em;
+		}
+	</style>
+</code> </pre>
+</div>
+
+
+<div class="" style="font-size: 0.7em; position: absolute; left: 60%; top: 0%; height: 100%; width: 40%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<style>  
+p.one4 , p.two4 , p.three4 {
+	padding:50px 30px 50px 5px;
+	margin:50px;
+	font-size:0.75em;
+}
+p.one4 {  
+	border-style:solid;  
+	border-width:5px;  
+}  
+p.two4 {  
+	border-style:groove;  
+	border-width:medium;  
+}  
+p.three4 {  
+	border-style:dotted;  
+	border-width:1px;  
+	border-color:red;  
+}
+
+</style>  
+<p class="one4">Top Right Bottom Left</p>  
+<p class="two4">Top Right Bottom Left</p>  
+<p class="three4">Top Right Bottom Left</p>
+
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="has-light-background" style="background-color: gray; position: absolute; left: 0%; top: 0%; height: 100%; width: 65%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+<style>
+	p.one5 {  
+		border-style:solid;  
+		border-width:5px;  
+		background-color: green;
+	}  
+	p.two5 {  
+		border-style:groove;  
+		border-width:medium;  
+		background-color:#ff3355;
+	}  
+	p.three5 {  
+		border-style:dotted;  
+		border-width:1px;  
+		border-color:red;  
+		background-color:rgb(33,66,99);
+		color:white;
+	} 
+	p.four5 {
+		border-style:dotted;  
+		border-width:1px;  
+		background: linear-gradient(#fff, #333);
+	}  	
+</style>
+</code> </pre>
+</div>
+
+
+<div class="" style="font-size: 0.7em; position: absolute; left: 60%; top: 0%; height: 100%; width: 40%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<style>  
+p.one5 , p.two5 , p.three5,  p.four5{
+	padding:50px 30px 50px 5px;
+	margin:50px;
+	font-size:0.75em;
+}
+p.one5 {  
+	border-style:solid;  
+	border-width:5px;  
+	background-color: green;
+}  
+p.two5 {  
+	border-style:groove;  
+	border-width:medium;  
+	background-color:#ff3355;
+}  
+p.three5 {  
+	border-style:dotted;  
+	border-width:1px;  
+	border-color:red;  
+	background-color:rgb(33,66,99);
+	color:white;
+}  
+p.four5 {
+	border-style:dotted;  
+	border-width:1px;  
+	background: linear-gradient(#fff, #333);
+}  
+</style>  
+<p class="one5">Top Right Bottom Left</p>  
+<p class="two5">Top Right Bottom Left</p>  
+<p class="three5">Top Right Bottom Left</p>
+<p class="four5">Top Right Bottom Left</p>
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="has-light-background" style="background-color: gray; position: absolute; left: 0%; top: 0%; height: 70%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+<style>
+	p.one6 {  
+		border-style:solid;  
+		border-width:5px;  
+		background:url(2U1-CS3/media/clouds.png);
+	}  
+	p.two6 {  
+		border-style:groove;  
+		border-width:medium;  
+		background: url(2U1-CS3/media/calendar.png) no-repeat;
+	}  
+	p.three6 {  
+		border-style:dotted;  
+		border-width:1px;  
+		border-color:red;  
+		background:url(2U1-CS3/media/calendar.png);
+	}  
+</style>
+</code> </pre>
+</div>
+
+
+<div class="flex-even" style="font-size: 0.7em; position: absolute; left: 0%; top: 60%; height: 40%; width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center" >
+
+
+<style>  
+div.one6 , div.two6 , div.three6{
+	padding:50px 30px 50px 5px;
+	margin:50px;
+	font-size:0.75em;
+}
+div.one6 {  
+	border-style:solid;  
+	border-width:5px;  
+	background:url(2U1-CS3/media/clouds.png);
+}  
+div.two6 {  
+	border-style:groove;  
+	border-width:medium;  
+	background: url(2U1-CS3/media/calendar.png) no-repeat;
+}  
+div.three6 {  
+	border-style:dotted;  
+	border-width:1px;  
+	border-color:red;  
+	background:url(2U1-CS3/media/calendar.png);
+}  
+</style>  
+<div class="one6">Top Right Bottom Left</div>  
+<div class="two6">Top Right Bottom Left</div>  
+<div class="three6">Top Right Bottom Left</div>
+
+</div>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Positioning
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 0%; top: 0%; height: 55%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+<style>  
+	h2.pos_left {  
+		position:relative;  
+		left:-20px;  
+	}
+	h2.pos_right {  
+		position:relative;  
+		left:20px;  
+	}  
+</style>  
+<h2>This is a heading with no position</h2>  
+<h2 class="pos_left">This heading is moved left according to  
+its normal position</h2>  
+<h2 class="pos_right">This heading is moved right according to  
+its normal position</h2>  
+<p>This is our paragraph that has a heading with relative  
+positioning. Unless we put a negative bottom offset on our  
+heading large enough to cover it, it will stay above the para-  
+graph this time. </p>
+</code> </pre>
+</div>
+
+
+
+<div class="" style="font-size: 0.45em; position: absolute; left: 0%; top: 60%; height: 40%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+<style>  
+	h2.pos_left {  
+		position:relative;  
+		left:-40px;  
+	}
+	h2.pos_right {  
+		position:relative;  
+		left:40px;  
+	}  
+</style>  
+<h2>This is a heading with no position</h2>  
+<h2 class="pos_left">This heading is moved left according to  
+its normal position</h2>  
+<h2 class="pos_right">This heading is moved right according to  
+its normal position</h2>  
+<p>This is our paragraph that has a heading with relative  
+positioning. Unless we put a negative bottom offset on our  
+heading large enough to cover it, it will stay above the paragraph this time. </p>
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 0%; top: 0%; height: 70%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+### Z-index
+
+<pre> <code>
+<style>  
+	img.low {  
+		position:absolute;  
+		left:0px;  
+		top:0px;  
+		z-index:-1;  
+	}  
+	img.high {  
+		position:absolute;  
+		left:0px;  
+		top:0px;  
+		z-index:1;  
+	}  
+</style>  
+
+<h3 class="text">Here is some text </h3>  
+<img src="2U1-CS3/media/clouds.png"    
+width="100" height="100" class="low" ></img>
+</code> </pre>
+</div>
+
+
+
+
+<div class="" style="font-size: 0.7em; position: absolute; left: 20%; top: 69%; height: 30%; width: 30%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+
+<style>  
+	img.low {  
+		position:absolute;  
+		left:0px;  
+		top:0px;  
+		z-index:-1;  
+	}  
+	img.high {  
+		position:absolute;  
+		left:0px;  
+		top:0px;  
+		z-index:1;  
+	}  
+</style>  
+
+<h3 class="text">Here is some text
+</h3>  
+<img src="2U1-CS3/media/clouds.png"  
+width="100" height="100" class="low" ></img>
+
+</div>
+
+
+
+<div class="" style="font-size: 0.7em; position: absolute; left: 50%; top: 69%; height: 30%; width: 30%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+
+<style>  
+	img.high {  
+		position:absolute;  
+		left:0px;  
+		top:0px;  
+		z-index:1;  
+	}  
+</style>  
+
+<h3 class="text">Here is some text
+</h3>  
+<img src="2U1-CS3/media/clouds.png"  
+width="100" height="100" class="high" ></img>
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 0%; top: 0%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+Layout with containers and floats
+</div>
+
+<div class="" style="position: absolute; left: 0%; top: 10%; height: 60%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<pre><code>
+<style>  
+	div.bordered{  
+		border-style:dashed;  
+		border-width:1px;  
+		margin:10px;
+		padding: 10px;
+	}  
+	#left{  
+		min-width:100px;  
+		max-width:150px;  
+		float:left;  
+	}  
+	#main{  
+		float:left;  
+	}  
+	#right{  
+		min-width:100px;  
+		max-width:150px;  
+		float:left;  
+	}  
+</style>
+
+<div id="container" class="bordered">  
+	<div id="left" class="bordered">  
+		<ul>  
+		<li><a href="">Link 1</a></li>  
+		<li><a href="">Link 2</a></li>  
+		<li><a href="">Link 3</a></li>  
+		</ul>  
+	</div>  
+	<div id="main" class="bordered">  
+		<div id="splash" class="bordered">[flash with id  
+		"video"]</div>  
+		<div id="content" class="bordered">Our text content  
+		here</div>  
+	</div>  
+	<div id="right" class="bordered">  
+		<div class="ad" class="bordered">an ad here</div>  
+		<div class="ad" class="bordered">another ad </div>  
+	</div>  
+</div>
+
+</code> </pre>
+
+</div>
+
+
+<div class="" style="font-size: 0.6em; position: absolute; left: 0%; top: 75%; height: 20%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<style>  
+	div.bordered{  
+		border-style:dashed;  
+		border-width:1px;  
+		margin:10px;
+		padding: 10px;
+	}  
+	#left{  
+		min-width:100px;  
+		max-width:150px;  
+		float:left;  
+	}  
+	#main{  
+		float:left;  
+	}  
+	#right{  
+		min-width:100px;  
+		max-width:150px;  
+		float:left;  
+	}  
+</style>
+
+<div id="container" class="bordered">  
+	<div id="left" class="bordered">  
+		<ul>  
+		<li><a href="">Link 1</a></li>  
+		<li><a href="">Link 2</a></li>  
+		<li><a href="">Link 3</a></li>  
+		</ul>  
+	</div>  
+	<div id="main" class="bordered">  
+		<div id="splash" class="bordered">[flash with id  
+		"video"]</div>  
+		<div id="content" class="bordered">Our text content  
+		here</div>  
+	</div>  
+	<div id="right" class="bordered">  
+		<div class="ad" class="bordered">an ad here</div>  
+		<div class="ad" class="bordered">another ad </div>  
+	</div>  
+</div>
+
+</div>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 0%; top: 15%; height: 30%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+
+
+<style>
+.parent {
+  background-color: #af47ff;
+  padding: 30px;
+  width: 500px;
+}
+
+.child {
+  background-color: #ff4797;
+  padding: 30px;
+}
+
+.box {
+  background-color: #f3ff47;
+  padding: 30px;
+  border: 2px solid #333;
+  border-style: dotted;
+  font-family: courier;
+  text-align: justify;
+  font-size: 1rem;
+}
+</style>
+
+<div class="parent">
+  <div class="child">
+    <div class="box">
+      <p>
+        This is some random paragraph and an image.
+        <img src="https://via.placeholder.com/100x100" ></img> The image is in the
+        middle of the text. The image is in the middle of the text. The image is
+        in the middle of the text. The image is in the middle of the text. The
+        image is in the middle of the text. The image is in the middle of the
+        text. The image is in the middle of the text. The image is in the middle
+        of the text. The image is in the middle of the text.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+</pre> </code>
+</div>
+
+
+<div class="" style="font-size: large; position: absolute; left: 0%; top: 70%; height: 30%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<style>
+.parent {
+  background-color: #af47ff;
+  padding: 20px;
+  width: 80%;
+}
+
+.child {
+  background-color: #ff4797;
+  padding:20px;
+}
+
+.box {
+  background-color: #f3ff47;
+  padding: 20px;
+  border: 2px solid #333;
+  border-style: dotted;
+  font-family: courier;
+  text-align: justify;
+  font-size: 1rem;
+}
+</style>
+
+<div class="parent">
+  <div class="child">
+    <div class="box">
+      <p>
+        This is some random paragraph and an image.
+        <img src="https://via.placeholder.com/100x100" ></img> The image is in the
+        middle of the text. The image is in the middle of the text. The image is
+        in the middle of the text. The image is in the middle of the text. The
+        image is in the middle of the text. The image is in the middle of the
+        text. The image is in the middle of the text. The image is in the middle
+        of the text. The image is in the middle of the text.
+      </p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+notes: 
+When you make text, you just simply want to add pictures in the appropriate places without having to think about it too much.
+Things can then look ugly, like this.
+But that shouldn't make you give up on the idea of making your writing flow without distracting yourself about the format.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 0%; top: 15%; height: 30%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+
+img.left {
+  float: left;
+  padding: 20px 20px 0px 0px;
+}
+
+</pre> </code>
+</div>
+
+
+<div class="" style="font-size: large; position: absolute; left: 0%; top: 70%; height: 30%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<style>
+.parent {
+  background-color: #af47ff;
+  padding: 20px;
+  width: 80%;
+}
+
+.child {
+  background-color: #ff4797;
+  padding:20px;
+}
+
+.box {
+  background-color: #f3ff47;
+  padding: 20px;
+  border: 2px solid #333;
+  border-style: dotted;
+  font-family: courier;
+  text-align: justify;
+  font-size: 1rem;
+}
+  
+img.left { 
+	float: left; 
+	padding: 20px 20px 0px 0px; 
+}
+</style>
+
+<div class="parent">
+  <div class="child">
+    <div class="box">
+      <p>
+        This is some random paragraph and an image.
+        <img class="left" src="https://via.placeholder.com/100x100" ></img> <img class="left" src="https://via.placeholder.com/100x100" ></img>The image is in the
+        middle of the text. The image is in the middle of the text. The image is
+        in the middle of the text. The image is in the middle of the text. The
+        image is in the middle of the text. The image is in the middle of the
+        text. The image is in the middle of the text. The image is in the middle
+        of the text. The image is in the middle of the text.
+      </p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+notes: 
+This is for putting the picture on the left side of a screen
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="position: absolute; left: 0%; top: 15%; height: 30%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+<pre> <code>
+
+img.right { 
+	float: right; 
+	clear: right;
+	padding: 0px 0px 20px 20px; 
+}
+
+</pre> </code>
+</div>
+
+
+<div class="" style="font-size: large; position: absolute; left: 0%; top: 70%; height: 30%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+
+<style>
+.parent {
+  background-color: #af47ff;
+  padding: 20px;
+  width: 80%;
+}
+
+.child {
+  background-color: #ff4797;
+  padding:20px;
+}
+
+.box {
+  background-color: #f3ff47;
+  padding: 20px;
+  border: 2px solid #333;
+  border-style: dotted;
+  font-family: courier;
+  text-align: justify;
+  font-size: 1rem;
+}
+  
+img.right { 
+	float: right; 
+	clear: right;
+	padding: 0px 0px 20px 20px; 
+}
+</style>
+
+<div class="parent">
+  <div class="child">
+    <div class="box">
+      <p>
+        This is some random paragraph and an image.
+        <img class="right" src="https://via.placeholder.com/100x100" ></img> <img class="right" src="https://via.placeholder.com/100x100" ></img> The image is in the
+        middle of the text. The image is in the middle of the text. The image is
+        in the middle of the text. The image is in the middle of the text. The
+        image is in the middle of the text. The image is in the middle of the
+        text. The image is in the middle of the text. The image is in the middle
+        of the text. The image is in the middle of the text.
+      </p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+notes: 
+This is for putting the picture on the right side of a screen
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Colors 
+
+<b style="color:aliceblue; background:black;"> `aliceblue`</b>
+<b style="color:antiquewhite; background:black;"> `antiquewhite`</b>
+<b style="color:aqua; background:black;"> `aqua`</b>
+<b style="color:aquamarine; background:black;"> `aquamarine`</b>
+<b style="color:azure; background:black;"> `azure`</b>
+<b style="color:beige; background:black;"> `beige`</b>
+<b style="color:bisque; background:black;"> `bisque`</b>
+<b style="color:black; background:white;"> `black`</b>
+<b style="color:blanchedalmond; background:black;"> `blanchedalmond`</b>
+<b style="color:blue; background:white;"> `blue`</b>
+<b style="color:blueviolet; background:white;"> `blueviolet`</b>
+<b style="color:brown; background:white;"> `brown`</b>
+<b style="color:burlywood; background:black;"> `burlywood`</b>
+<b style="color:cadetblue; background:white;"> `cadetblue`</b>
+<b style="color:chartreuse; background:black;"> `chartreuse`</b>
+<b style="color:chocolate; background:white;"> `chocolate`</b>
+<b style="color:coral; background:black;"> `coral`</b>
+<b style="color:cornflowerblue; background:white;"> `cornflowerblue`</b>
+<b style="color:cornsilk; background:black;"> `cornsilk`</b>
+<b style="color:crimson; background:white;"> `crimson`</b>
+<b style="color:cyan; background:black;"> `cyan`</b>
+<b style="color:darkblue; background:white;"> `darkblue`</b>
+<b style="color:darkcyan; background:white;"> `darkcyan`</b>
+<b style="color:darkgoldenrod; background:white;"> `darkgoldenrod`</b>
+<b style="color:darkgray; background:black;"> `darkgray`</b>
+<b style="color:darkgreen; background:white;"> `darkgreen`</b>
+<b style="color:darkgrey; background:black;"> `darkgrey`</b>
+<b style="color:darkkhaki; background:black;"> `darkkhaki`</b>
+<b style="color:darkmagenta; background:white;"> `darkmagenta`</b>
+<b style="color:darkolivegreen; background:white;"> `darkolivegreen`</b>
+<b style="color:darkorange; background:white;"> `darkorange`</b>
+<b style="color:darkorchid; background:white;"> `darkorchid`</b>
+<b style="color:darkred; background:white;"> `darkred`</b>
+<b style="color:darksalmon; background:white;"> `darksalmon`</b>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Colors
+
+<b style="color:darkseagreen; background:black;"> `darkseagreen`</b>
+<b style="color:darkslateblue; background:white;"> `darkslateblue`</b>
+<b style="color:darkslategray; background:white;"> `darkslategray`</b>
+<b style="color:darkslategrey; background:white;"> `darkslategrey`</b>
+<b style="color:darkturquoise; background:white;"> `darkturquoise`</b>
+<b style="color:darkviolet; background:white;"> `darkviolet`</b>
+<b style="color:deeppink; background:white;"> `deeppink`</b>
+<b style="color:deepskyblue; background:white;"> `deepskyblue`</b>
+<b style="color:dimgray; background:white;"> `dimgray`</b>
+<b style="color:dimgrey; background:white;"> `dimgrey`</b>
+<b style="color:dodgerblue; background:white;"> `dodgerblue`</b>
+<b style="color:firebrick; background:white;"> `firebrick`</b>
+<b style="color:floralwhite; background:black;"> `floralwhite`</b>
+<b style="color:forestgreen; background:white;"> `forestgreen`</b>
+<b style="color:fuchsia; background:white;"> `fuchsia`</b>
+<b style="color:gainsboro; background:black;"> `gainsboro`</b>
+<b style="color:ghostwhite; background:black;"> `ghostwhite`</b>
+<b style="color:gold; background:black;"> `gold`</b>
+<b style="color:goldenrod; background:black;"> `goldenrod`</b>
+<b style="color:gray; background:white;"> `gray`</b>
+<b style="color:green; background:white;"> `green`</b>
+<b style="color:greenyellow; background:black;"> `greenyellow`</b>
+<b style="color:grey; background:white;"> `grey`</b>
+<b style="color:honeydew; background:black;"> `honeydew`</b>
+<b style="color:hotpink; background:black;"> `hotpink`</b>
+<b style="color:indianred; background:black;"> `indianred`</b>
+<b style="color:indigo; background:white;"> `indigo`</b>
+<b style="color:ivory; background:black;"> `ivory`</b>
+<b style="color:khaki; background:black;"> `khaki`</b>
+<b style="color:lavender; background:black;"> `lavender`</b>
+<b style="color:lavenderblush; background:black;"> `lavenderblush`</b>
+<b style="color:lawngreen; background:black;"> `lawngreen`</b>
+<b style="color:lemonchiffon; background:black;"> `lemonchiffon`</b>
+<b style="color:lightblue; background:black;"> `lightblue`</b>
+<b style="color:lightcoral; background:black;"> `lightcoral`</b>
+<b style="color:lightcyan; background:black;"> `lightcyan`</b>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Colors
+
+<b style="color:lightgoldenrodyellow; background:black;"> `lightgoldenrodyellow`</b>
+<b style="color:lightgray; background:black;"> `lightgray`</b>
+<b style="color:lightgreen; background:black;"> `lightgreen`</b>
+<b style="color:lightgrey; background:black;"> `lightgrey`</b>
+<b style="color:lightpink; background:black;"> `lightpink`</b>
+<b style="color:lightsalmon; background:black;"> `lightsalmon`</b>
+<b style="color:lightseagreen; background:black;"> `lightseagreen`</b>
+<b style="color:lightskyblue; background:black;"> `lightskyblue`</b>
+<b style="color:lightslategray; background:white;"> `lightslategray`</b>
+<b style="color:lightslategrey; background:white;"> `lightslategrey`</b>
+<b style="color:lightsteelblue; background:black;"> `lightsteelblue`</b>
+<b style="color:lightyellow; background:black;"> `lightyellow`</b>
+<b style="color:lime; background:black;"> `lime`</b>
+<b style="color:limegreen; background:white;"> `limegreen`</b>
+<b style="color:linen; background:black;"> `linen`</b>
+<b style="color:magenta; background:white;"> `magenta`</b>
+<b style="color:maroon; background:white;"> `maroon`</b>
+<b style="color:mediumaquamarine; background:white;"> `mediumaquamarine`</b>
+<b style="color:mediumblue; background:white;"> `mediumblue`</b>
+<b style="color:mediumorchid; background:white;"> `mediumorchid`</b>
+<b style="color:mediumpurple; background:white;"> `mediumpurple`</b>
+<b style="color:mediumseagreen; background:white;"> `mediumseagreen`</b>
+<b style="color:mediumslateblue; background:white;"> `mediumslateblue`</b>
+<b style="color:mediumspringgreen; background:white;"> `mediumspringgreen`</b>
+<b style="color:mediumturquoise; background:white;"> `mediumturquoise`</b>
+<b style="color:mediumvioletred; background:white;"> `mediumvioletred`</b>
+<b style="color:midnightblue; background:white;"> `midnightblue`</b>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Colors
+
+<b style="color:mintcream; background:black;"> `mintcream`</b>
+<b style="color:mistyrose; background:black;"> `mistyrose`</b>
+<b style="color:moccasin; background:black;"> `moccasin`</b>
+<b style="color:navajowhite; background:black;"> `navajowhite`</b>
+<b style="color:navy; background:white;"> `navy`</b>
+<b style="color:oldlace; background:black;"> `oldlace`</b>
+<b style="color:olive; background:white;"> `olive`</b>
+<b style="color:olivedrab; background:white;"> `olivedrab`</b>
+<b style="color:orange; background:white;"> `orange`</b>
+<b style="color:orangered; background:white;"> `orangered`</b>
+<b style="color:orchid; background:white;"> `orchid`</b>
+<b style="color:palegoldenrod; background:black;"> `palegoldenrod`</b>
+<b style="color:palegreen; background:black;"> `palegreen`</b>
+<b style="color:paleturquoise; background:black;"> `paleturquoise`</b>
+<b style="color:palevioletred; background:black;"> `palevioletred`</b>
+<b style="color:papayawhip; background:black;"> `papayawhip`</b>
+<b style="color:peachpuff; background:black;"> `peachpuff`</b>
+<b style="color:peru; background:black;"> `peru`</b>
+<b style="color:pink; background:black;"> `pink`</b>
+<b style="color:plum; background:black;"> `plum`</b>
+<b style="color:powderblue; background:black;"> `powderblue`</b>
+<b style="color:purple; background:white;"> `purple`</b>
+<b style="color:rebeccapurple; background:white;"> `rebeccapurple`</b>
+<b style="color:red; background:white;"> `red`</b>
+<b style="color:rosybrown; background:black;"> `rosybrown`</b>
+<b style="color:royalblue; background:white;"> `royalblue`</b>
+<b style="color:saddlebrown; background:white;"> `saddlebrown`</b>
+<b style="color:salmon; background:black;"> `salmon`</b>
+<b style="color:sandybrown; background:black;"> `sandybrown`</b>
+<b style="color:seagreen; background:black;"> `seagreen`</b>
+<b style="color:seashell; background:black;"> `seashell`</b>
+<b style="color:sienna; background:white;"> `sienna`</b>
+<b style="color:silver; background:black;"> `silver`</b>
+<b style="color:skyblue; background:black;"> `skyblue`</b>
+<b style="color:slateblue; background:white;"> `slateblue`</b>
+<b style="color:slategray; background:white;"> `slategray`</b>
+<b style="color:slategrey; background:white;"> `slategrey`</b>
+<b style="color:snow; background:black;"> `snow`</b>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Colors
+
+<b style="color:springgreen; background:black;"> `springgreen`</b>
+<b style="color:steelblue; background:white;"> `steelblue`</b>
+<b style="color:tan; background:black;"> `tan`</b>
+<b style="color:teal; background:white;"> `teal`</b>
+<b style="color:thistle; background:black;"> `thistle`</b>
+<b style="color:tomato; background:black;"> `tomato`</b>
+<b style="color:turquoise; background:black;"> `turquoise`</b>
+<b style="color:violet; background:black;"> `violet`</b>
+<b style="color:wheat; background:black;"> `wheat`</b>
+<b style="color:white; background:black;"> `white`</b>
+<b style="color:whitesmoke; background:black;"> `whitesmoke`</b>
+<b style="color:yellow; background:black;"> `yellow`</b>
+<b style="color:yellowgreen; background:black;"> `yellowgreen`</b>
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+> Fonts
+
+### <p style="font-family:Serif"> Serif </p>
+
+<p style="font-family:georgia"> Georgia </p>
+<p style="font-family:Times New Roman"> Times New Roman </p>
+<p style="font-family:Times"> Times </p>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Fonts
+
+### <p style="font-family:Sans-Serif"> Sans-Serif </p>
+<p style="font-family:Arial">Arial </p>
+<p style="font-family:Verdana">Verdana </p>
+<p style="font-family:Arial Black">Arial Black</p>
+<p style="font-family:Tahoma">Tahoma</p>
+<p style="font-family:Impact">Impact</p>
+<p style="font-family:Trebuchet MS">Trebuchet MS</p>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Fonts
+
+### <p style="font-family:Monospace">Monospace</p>
+
+<p style="font-family:Courier New">Courier New</p>
+<p style="font-family:Courier">Courier</p>
+<p style="font-family:Lucida Console">Lucida Console</p>
+
+### <p style="font-family:Cursive">Cursive</p>
+### <p style="font-family:Fantasy">Fantasy</p>
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Persistence
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Local Storage
+
+### Save Data to Local Storage
+
+	localStorage.setItem(_key_, _value_);
+
+### Read Data from Local Storage
+
+	let lastname = localStorage.getItem(_key_);
+
+### Remove Data from Local Storage
+
+	localStorage.removeItem(_key_);
+
+### Remove All (Clear Local Storage)
+
+	localStorage.clear();
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### localStorage example
+
+Count the number of times a user has clicked a button:
+
+```js 
+if (localStorage.clickcount) {  
+  localStorage.clickcount = Number(localStorage.clickcount) + 1;  
+} else {  
+  localStorage.clickcount = 1;  
+}
+```
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Design
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Waterfall
+
+<img src="Pasted image 20230518135313.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Wireframing
+
+<img src="Pasted image 20230518134537.png" alt="" style="width: 500px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Storyboarding
+
+<img src="Pasted image 20230518134645.png" alt="" style="width: 400px; object-fit: fill">
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Thank you!
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## References
+
+- book: The Missing Link An Introduction to Web Development and Programming
+- book: https://flaviocopes.com/books-dist/html-handbook.pdf
+</div></script></section></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+	<script src="plugin/reveal-pointer/pointer.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+	      RevealPointer,
+		  RevealChalkboard, 
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{id: 'toggle-overview',
+				title: 'Toggle overview (O)',
+				icon: '<i class="fa fa-th"></i>',
+				action: 'Reveal.toggleOverview();'
+				},
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"normal"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

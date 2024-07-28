@@ -1,0 +1,3109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/simple.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+	<link rel="stylesheet" href="plugin/reveal-pointer/pointer.css" />
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Sir Roy's CS transition guide
+
+- by Roy Canseco MSEE, PhD Cand. CS
+- last update: May 2023
+
+
+<aside class="notes"><p>these are my speaker notes.... :)</p>
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# CS 2 - Computational Thinking
+
+Topics for PSHS G8
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### print - Hello World
+
+#### C++
+```cpp
+#include <iostream>
+int main() {
+    std::cout << "Hello, World!";
+    return 0;
+}
+```
+#### Javascript
+```javascript
+console.log("Hello, World!");
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Hello World
+
+#### Java
+
+
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+
+#### Python
+```python
+print("Hello, World!")
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### input - Greeter program
+
+#### C++
+```c++
+#include <iostream>
+#include <string>
+int main() {
+    std::string name;
+    std::cout << "Enter your name: ";
+    std::getline(std::cin, name);
+    std::cout << "Hello, " << name << "!";
+    return 0;
+}
+```
+#### Javascript
+```javascript
+const name = prompt("Enter your name: ");
+console.log(`Hello, ${name}!`);
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Greeter program
+#### Java
+```java
+import java.util.Scanner;
+public class Greeting {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        System.out.println("Hello, " + name + "!");
+    }
+}
+```
+
+#### Python
+```python
+name = input("Enter your name: ")
+print(f"Hello, {name}!")
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### if else - Positive, Negative or Zero
+#### C++
+```c++
+#include <iostream>
+int main() {
+    int num;
+    std::cout << "Enter a number: ";
+    std::cin >> num;
+    if (num > 0) {
+        std::cout << num << " is positive.";
+    } else if (num < 0) {
+        std::cout << num << " is negative.";
+    } else {
+        std::cout << num << " is 0.";
+    }
+    return 0;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+if else - Positive, Negative or Zero
+#### Javascript
+```javascript
+const num = prompt("Enter a number: ");
+if (num > 0) {
+    console.log(`${num} is positive.`);
+} else if (num < 0) {
+    console.log(`${num} is negative.`);
+} else {
+    console.log(`${num} is 0.`);
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+if else -Positive, Negative or Zero
+#### Java
+```java
+import java.util.Scanner;
+public class PositiveNegativeOrZero {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int num = scanner.nextInt();
+        if (num > 0) {
+            System.out.println(num + " is positive.");
+        } else if (num < 0) {
+            System.out.println(num + " is negative.");
+        } else {
+            System.out.println(num + " is 0.");
+        }
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+if else - Positive, Negative or Zero
+#### Python
+```python
+num = int(input("Enter a number: "))
+if num > 0:
+    print(f"{num} is positive.")
+elif num < 0:
+    print(f"{num} is negative.")
+else:
+    print(f"{num} is 0.")
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### For Loop  - 1 to 5
+
+#### C++
+```c++
+#include <iostream>
+int main() {
+    for (int i = 1; i <= 5; i++) {
+        std::cout << i << " ";
+    }
+    return 0;
+}
+```
+
+#### javascript
+```javascript
+for (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+For Loop from  - 1 to 5
+#### Java
+```java
+public class Counting {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(i);
+        }
+    }
+}
+```
+
+#### Python
+```python
+for i in range(1, 6):
+    print(i)
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### While Loop - even numbers only
+#### C++
+```c++
+#include <iostream>
+int main() {
+    int num;
+    std::cout << "Enter a number: ";
+    std::cin >> num;
+    while (num % 2 == 0) {
+        std::cout << num << " ";
+        std::cout << "Enter a number: ";
+        std::cin >> num;
+    }
+    return 0;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+While Loop - even numbers only
+#### Javascript
+```javascript
+let num = prompt("Enter a number: ");
+while (num % 2 == 0) {
+    console.log(num);
+    num = prompt("Enter a number: ");
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+While Loop - even numbers only
+#### Java
+```java
+import java.util.Scanner;
+public class EvenNumbers {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int num = scanner.nextInt();
+        while (num % 2 == 0) {
+            System.out.println(num);
+            System.out.print("Enter a number: ");
+            num = scanner.nextInt();
+        }
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+While Loop - even numbers only
+#### Python
+```python
+num = int(input("Enter a number: "))
+while num % 2 == 0:
+    print(num)
+    num = int(input("Enter a number: "))
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Do While Loop - multiplication table
+
+#### C++
+```c++
+#include <iostream>
+int main() {
+    int num;
+    std::cout << "Enter a number: ";
+    std::cin >> num;
+    int i = 1;
+    do {
+        std::cout << num << " * " << i << " = " << num * i << std::endl;
+        i++;
+    } while (i <= 10);
+    return 0;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Do While Loop - multiplication table
+#### javascript
+```javascript
+const num = prompt("Enter a number: ");
+let i = 1;
+do {
+    console.log(`${num} * `${i} = $`{num * i}`);
+    i++;
+} while (i <= 10);
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Do While Loop - multiplication table
+#### Java
+```java
+import java.util.Scanner;
+public class MultiplicationTable {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int num = scanner.nextInt();
+        int i = 1;
+        do {
+            System.out.println(num + " * " + i + " = " + num * i);
+            i++;
+        } while (i <= 10);
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Do While Loop - multiplication table
+#### Python
+```python
+num = int(input("Enter a number: "))
+i = 1
+while True:
+    print(f"{num} * {i} = {num * i}")
+    i += 1
+    if not (i <= 10):
+        break
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Array - summing a line of numbers
+
+#### C++
+```c++
+#include <iostream>
+#include <string>
+#include <sstream>
+int main() {
+    std::string str;
+    std::cout << "Enter a string of numbers separated by spaces: ";
+    std::getline(std::cin, str);
+    std::stringstream ss(str);
+    int num;
+    int sum = 0;
+    while (ss >> num) {
+        sum += num;
+    }
+    std::cout << "The sum of the numbers is: " << sum;
+    return 0;
+}
+```
+This uses a **stringstream** instead of the normal array
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### C++ stringstream
+`std::stringstream` is a stream class in C++ that can be used to operate on strings. It allows you to read from or write to a string as if it were a stream (like `cin` or `cout`).
+
+In the C++ program I provided earlier, `std::stringstream` is used to extract numbers from a string.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Here’s how it works:
+
+1.  A `std::stringstream` object `ss` is created and initialized with the input string `str`.
+2.  The `>>` operator is used to extract numbers from the `std::stringstream` object one by one.
+3.  The extracted number is added to the variable `sum`.
+4.  The process repeats until there are no more numbers to extract.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Array - summing numbers
+#### Javascript
+
+```javascript
+const str = prompt("Enter a string of numbers separated by spaces: ");
+const arr = str.split(' ').map(Number);
+const sum = arr.reduce((a, b) => a + b, 0);
+console.log(`The sum of the numbers is: ${sum}`);
+```
+
+This uses the **reduce** method and **callbacks**
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### js - reduce and callbacks
+
+- The `reduce()` method takes a callback function as its first argument and an initial value as its second argument. The callback function takes two arguments: an accumulator and the current value.
+
+- In the example, `arr.reduce((a, b) => a + b, 0)`, the callback function is `(a, b) => a + b` and the initial value is `0`.
+
+- The `reduce()` method applies the callback function to each element of the array, accumulating the result in the accumulator.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Here’s how it works step by step for an array   
+  `[1, 2, 3, 4]`:
+
+1.  The initial value of the accumulator is `0`.
+2.  The first element of the array is `1`. The callback function is called with arguments `(0, 1)` and returns `0 + 1 = 1`. This becomes the new value of the accumulator.
+3.  The second element of the array is `2`. The callback function is called with arguments `(1, 2)` and returns `1 + 2 = 3`. This becomes the new value of the accumulator.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+4.  The third element of the array is `3`. The callback function is called with arguments `(3, 3)` and returns `3 + 3 = 6`. This becomes the new value of the accumulator.
+2.  The fourth element of the array is `4`. The callback function is called with arguments `(6, 4)` and returns `6 + 4 = 10`. This becomes the final value of the accumulator.
+
+So in this case,  
+`arr.reduce((a, b) => a + b, 0)`   
+returns `10`, which is the sum of all elements in the array.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Array - summing a line of numbers
+#### Java
+```java
+import java.util.Scanner;
+public class SumOfNumbers {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a string of numbers separated by spaces: ");
+        String str = scanner.nextLine();
+        String[] arr = str.split(" ");
+        int sum = 0;
+        for (String s : arr) {
+            sum += Integer.parseInt(s);
+        }
+        System.out.println("The sum of the numbers is: " + sum);
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Array - summing a line of numbers
+#### Python
+```python
+str = input("Enter a string of numbers separated by spaces: ")
+arr = [int(x) for x in str.split()]
+sum = 0
+for num in arr:
+    sum += num
+print(f"The sum of the numbers is: {sum}")
+```
+This uses **list comprehension**
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### python - list comprehension
+
+- List comprehension is a concise way to create lists in Python. 
+- It’s a syntactic construct that consists of a single expression followed by at least one `for` clause and zero or more `if` clauses. 
+- The expression is evaluated once for each item in the sequence specified in the `for` clause. If there are any `if` clauses, the expression is only evaluated for items that meet the condition specified in the `if` clause.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Here’s an example that demonstrates how to use list comprehension to create a list of squares of the numbers from 0 to 9:
+
+```python
+squares = [x**2 for x in range(10)]
+print(squares)
+```
+
+This program outputs `[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]`, which are the squares of the numbers from 0 to 9.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+List comprehension can also be used to create lists based on some condition. 
+
+Here’s an example that demonstrates how to use list comprehension to create a list of even numbers from 0 to 9:
+
+```python
+evens = [x for x in range(10) if x % 2 == 0]
+print(evens)
+```
+
+This program outputs `[0, 2, 4, 6, 8]`, which are the even numbers from 0 to 9.
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Functions - isPrime()
+
+#### C++
+```c++
+bool isPrime(int num) {
+    if (num <= 1) {
+        return false;
+    }
+    for (int i = 2; i < num; i++) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Functions - isPrime()
+#### Javascript
+```javascript
+function isPrime(num) {
+    if (num <= 1) {
+        return false;
+    }
+    for (let i = 2; i < num; i++) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Functions - isPrime()
+#### Java
+```java
+public static boolean isPrime(int num) {
+        if (num <= 1) {
+            return false;
+        }
+        for (int i = 2; i < num; i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+```
+
+In Java, `public` and `static` are keywords that can be used to modify methods and variables.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Java public and static keywords
+
+- The `public` keyword is an access modifier that specifies that the method or variable it modifies is accessible from any class. This means that any class, regardless of its package, can access a `public` method or variable.
+
+- The `static` keyword specifies that the method or variable it modifies belongs to the class, rather than to any instance of the class. This means that you can access a `static` method or variable without creating an instance of the class.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Functions - isPrime()
+#### Python
+```python
+def is_prime(num):
+    if num <= 1:
+        return False
+    for i in range(2, num):
+        if num % i == 0:
+            return False
+    return True
+```
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# CS 3 - Web Development
+
+This is for client-side web
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### HTML Structure
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>CS 3</title>
+  <link href="style.css" rel="stylesheet" type="text/css" ></link>
+</head>
+
+<body>
+  Hello world
+
+  
+  <script src="script.js">__SCRIPT_END__
+</body>
+
+</html>
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### CSS Structure
+
+```css
+html {
+  height: 100%;
+  width: 100%;
+}
+```
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# CS4 - OOP
+
+Object-oriented programming
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Classes - car
+
+#### C++
+```c++
+#include <iostream>
+class Car {
+public:
+    std::string color;
+    int seatingCapacity;
+    Car(std::string c, int s) : color(c), seatingCapacity(s) {}
+    void beep() {
+        std::cout << "Beep!" << std::endl;
+    }
+};
+int main() {
+    Car myCar("red", 4);
+    myCar.beep();
+    return 0;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Classes - car 
+#### Javascript
+
+
+```javascript
+class Car {
+    constructor(color, seatingCapacity) {
+        this.color = color;
+        this.seatingCapacity = seatingCapacity;
+    }
+    beep() {
+        console.log("Beep!");
+    }
+}
+const myCar = new Car("red", 4);
+myCar.beep();
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Classes - car
+
+#### Java
+
+```java
+public class Car {
+    String color;
+    int seatingCapacity;
+    public Car(String color, int seatingCapacity) {
+        this.color = color;
+        this.seatingCapacity = seatingCapacity;
+    }
+    public void beep() {
+        System.out.println("Beep!");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Car myCar = new Car("red", 4);
+        myCar.beep();
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Classes - car
+#### Python
+
+```python
+class Car:
+    def __init__(self, color, seating_capacity):
+        self.color = color
+        self.seating_capacity = seating_capacity
+    def beep(self):
+        print("Beep!")
+        
+my_car = Car("red", 4)
+my_car.beep()
+
+```
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# CS 5 - Data Structures
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recursion - factorial
+
+#### C++
+```c++
+int factorial(int n) {
+    if (n == 0) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Recursion - factorial
+#### Javascript
+
+```javascript
+function factorial(n) {
+    if (n == 0) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Recursion - factorial
+#### Java
+```java
+    public static int factorial(int n) {
+        if (n == 0) {
+            return 1;
+        } else {
+            return n * factorial(n - 1);
+        }
+    }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Recursion - factorial
+#### Python
+```python
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+num = 5
+print(f"Factorial of {num} is {factorial(num)}")
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Search - algorithm
+
+#### C++
+```c++
+#include <algorithm>
+#include <vector>
+#include <iostream>
+
+int main() {
+    std::vector<int> numbers = {5, 3, 1, 4, 2};
+    int target = 3;
+    auto it = std::find(numbers.begin(), numbers.end(), target);
+    if (it != numbers.end()) {
+        std::cout << "Found " << target << " at index " << it - numbers.begin() << '\n';
+    } else {
+        std::cout << target << " not found\n";
+    }
+    return 0;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Search - algorithm
+#### Javascript
+```javascript
+let numbers = [5, 3, 1, 4, 2];
+let target = 3;
+let index = numbers.indexOf(target);
+if (index !== -1) {
+    console.log(`Found `${target} at index $`{index}`);
+} else {
+    console.log(`${target} not found`);
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Search - algorithm
+#### Java
+
+```java
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] numbers = {5, 3, 1, 4, 2};
+        int target = 3;
+        int index = Arrays.binarySearch(numbers, target);
+        if (index >= 0) {
+            System.out.println("Found " + target + " at index " + index);
+        } else {
+            System.out.println(target + " not found");
+        }
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Search - algorithm
+#### Python
+
+```python
+numbers = [5, 3, 1, 4, 2]
+target = 3
+try:
+    index = numbers.index(target)
+    print(f"Found {target} at index {index}")
+except ValueError:
+    print(f"{target} not found")
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Sort - asc (and desc)
+
+#### C++
+```c++
+#include <algorithm>
+#include <vector>
+#include <iostream>
+
+int main() {
+    std::vector<int> numbers = {5, 3, 1, 4, 2};
+    std::sort(numbers.begin(), numbers.end());
+    //std::sort(numbers.rbegin(), numbers.rend()); // reverse
+    for (int number : numbers) {
+        std::cout << number << ' ';
+    }
+    return 0;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Sort - asc (and desc)
+
+#### Javascript
+```javascript
+let numbers = [5, 3, 1, 4, 2];
+numbers.sort((a, b) => a - b);
+// numbers.sort((a, b) => b - a); // reverse
+console.log(numbers);
+```
+
+ - This code uses the `sort` method with a compare function to sort the array `arr` in descending order. 
+ - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The compare function takes two arguments  `a` and `b` and returns a value less than 0 if `a` should come before `b`, a value greater than 0 if `a` should come after `b`, or 0 if `a` and `b` are equal.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Sort - asc (and desc)
+
+#### Javascript
+```javascript
+let numbers = [5, 3, 1, 4, 2];
+numbers.sort((a, b) => a - b);
+numbers.sort((a, b) => b - a); // reverse
+console.log(numbers);
+```
+
+ - To reverse, the compare function should return the result of subtracting `a` from `b`, which sorts the array in descending order.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Sort - asc (and desc)
+
+#### Java
+```java
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] numbers = {5, 3, 1, 4, 2};
+        Arrays.sort(numbers);
+        // Arrays.sort(numbers, Collections.reverseOrder());  
+        ////  reverse order
+        System.out.println(Arrays.toString(numbers));
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Sort - asc (and desc)
+
+#### Python
+```python
+numbers = [5, 3, 1, 4, 2]
+numbers.sort()
+# numbers.sort(reverse=True) # reverse order
+print(numbers)
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Dictionary / Map / Hashmap /  Associative Array
+
+#### C++
+```c++
+#include <iostream>
+#include <map>
+int main() {
+    std::map<std::string, int> age;
+    age["Alice"] = 30;
+    age["Bob"] = 40;
+    age["Charlie"] = 50;
+    std::cout << "Alice is " << age["Alice"] << " years old." 
+	    << std::endl;
+    return 0;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Dictionary / Map / Hashmap /  Associative Array
+#### Javascript
+```javascript
+const age = {
+    Alice: 30,
+    Bob: 40,
+    Charlie: 50
+};
+console.log(`Alice is ${age.Alice} years old.`);
+console.log(`Bob is ${age.Bob} years old.`);
+console.log(`Charlie is ${age.Charlie} years old.`);
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Dictionary / Map / Hashmap /  Associative Array
+#### Java
+
+```java
+import java.util.HashMap;
+public class DictionaryExample {
+    public static void main(String[] args) {
+        HashMap<String, Integer> age = 
+					        new HashMap<String, Integer>();
+        age.put("Alice", 30);
+        age.put("Bob", 40);
+        age.put("Charlie", 50);
+        
+        System.out.println("Alice is " + age.get("Alice") + " years old.");
+        System.out.println("Bob is " + age.get("Bob") + " years old.");
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Dictionary / Map / Hashmap /  Associative Array
+#### Python
+
+```python
+age = {
+    'Alice': 30,
+    'Bob': 40,
+    'Charlie': 50
+}
+print(f"Alice is {age['Alice']} years old.")
+print(f"Bob is {age['Bob']} years old.")
+print(f"Charlie is {age['Charlie']} years old.")
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Stacks - LIFO
+
+#### C++ 
+```c++
+#include <iostream>
+#include <stack>
+int main() {
+    std::stack<int> s;
+    s.push(1);
+    s.push(2);
+    s.push(3);
+    while (!s.empty()) {
+        std::cout << s.top() << " ";
+        s.pop();
+    }
+    return 0;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Stacks - LIFO
+
+#### Javascript
+```javascript
+const s = [];
+s.push(1);
+s.push(2);
+s.push(3);
+while (s.length > 0) {
+    console.log(s.pop());
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Stacks - LIFO
+
+#### Java
+```java
+import java.util.Stack;
+public class StackExample {
+    public static void main(String[] args) {
+        Stack<Integer> s = new Stack<Integer>();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        while (!s.empty()) {
+            System.out.println(s.pop());
+        }
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Stacks - LIFO
+
+#### Python
+
+```python
+s = []
+s.append(1)
+s.append(2)
+s.append(3)
+while len(s) > 0:
+    print(s.pop())
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Queues  - FIFO
+
+#### C++
+```c++
+#include <iostream>
+#include <queue>
+int main() {
+    std::queue<int> q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    while (!q.empty()) {
+        std::cout << q.front() << " ";
+        q.pop();
+    }
+    return 0;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Queues - FIFO
+#### Javascript
+```javascript
+const q = [];
+q.push(1);
+q.push(2);
+q.push(3);
+while (q.length > 0) {
+    console.log(q.shift());
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Queues - FIFO
+#### Java
+
+```java
+import java.util.LinkedList;
+import java.util.Queue;
+public class QueueExample {
+    public static void main(String[] args) {
+        Queue<Integer> q = new LinkedList<Integer>();
+        q.add(1);
+        q.add(2);
+        q.add(3);
+        while (!q.isEmpty()) {
+            System.out.println(q.remove());
+        }
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Queues - FIFO
+#### Python
+```python
+from collections import deque
+q = deque()
+q.append(1)
+q.append(2)
+q.append(3)
+while len(q) > 0:
+    print(q.popleft())
+```
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Graphs - Binary Search Tree
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### C++ - BST
+Here is an example of a program that creates and traverses a binary search tree in C++
+```cpp
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *left, *right;
+    Node(int data) : data(data), left(NULL), right(NULL) {}
+};
+
+void insert(Node *&root, int data) {
+    if (!root) root = new Node(data);
+    else if (data < root->data) insert(root->left, data);
+    else insert(root->right, data);
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```cpp
+void inorder(Node *root) {
+    if (!root) return;
+    inorder(root->left);
+    cout << root->data << ' ';
+    inorder(root->right);
+}
+
+int main() {
+    Node *root = NULL;
+    int arr[] = {8, 3, 10, 1, 6, 14, 4, 7, 13};
+    for (int i = 0; i < sizeof(arr)/sizeof(arr[0]); i++)
+        insert(root, arr[i]);
+    inorder(root);
+}
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Javascript - BST
+- We have an implementation of a binary search tree in JavaScript.
+
+- This implementation defines two classes, `Node` and `BinarySearchTree`. `Node` is a simple class that represents a node in the binary search tree, while `BinarySearchTree` is the main class that contains the logic for inserting nodes into the tree, searching for values in the tree, and traversing the tree.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### BST - insert
+- The `insert` method is used to insert a new node into the tree. If the tree is empty, the new node becomes the root node. Otherwise, the method iterates through the tree until it finds a node that has a value greater or less than the new node's value, then inserts the new node as a child of that node.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+  insert(value) {
+    const newNode = new Node(value);
+
+    if (!this.root) {
+      this.root = newNode;
+      return this;
+    }
+
+    let current = this.root;
+    while (true) {
+      if (value === current.value) {
+        return undefined;
+      }
+
+      if (value < current.value) {
+        if (!current.left) {
+          current.left = newNode;
+          return this;
+        }
+
+        current = current.left;
+      } else {
+        if (!current.right) {
+          current.right = newNode;
+          return this;
+        }
+
+        current = current.right;
+      }
+    }
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### BST - find
+- The `find` method is used to search for a value in the tree. If the value is found, the method returns the node that contains the value. Otherwise, it returns `false`.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+
+  find(value) {
+    if (!this.root) {
+      return false;
+    }
+
+    let current = this.root;
+    let found = false;
+
+    while (current && !found) {
+      if (value < current.value) {
+        current = current.left;
+      } else if (value > current.value) {
+        current = current.right;
+      } else {
+        found = true;
+      }
+    }
+
+    if (!found) {
+      return false;
+    }
+
+    return current;
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### BST - Level Order
+```js
+  BFS() {
+    const queue = [];
+    const visited = [];
+    let node = this.root;
+
+    queue.push(node);
+
+    while (queue.length) {
+      node = queue.shift();
+      visited.push(node.value);
+
+      if (node.left) {
+        queue.push(node.left);
+      }
+
+      if (node.right) {
+        queue.push(node.right);
+      }
+    }
+
+    return visited;
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### BST - Preorder
+```js
+
+  DFSPreOrder() {
+    const visited = [];
+    let current = this.root;
+
+    function traverse(node) {
+      visited.push(node.value);
+
+      if (node.left) {
+        traverse(node.left);
+      }
+
+      if (node.right) {
+        traverse(node.right);
+      }
+    }
+
+    traverse(current);
+
+    return visited;
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### BST- Postorder
+```js
+  DFSPostOrder() {
+    const visited = [];
+    let current = this.root;
+
+    function traverse(node) {
+      if (node.left) {
+        traverse(node.left);
+      }
+
+      if (node.right) {
+        traverse(node.right);
+      }
+
+      visited.push(node.value);
+    }
+
+    traverse(current);
+
+    return visited;
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### BST - Inorder
+```js
+
+  DFSInOrder() {
+    const visited = [];
+    let current = this.root;
+
+    function traverse(node) {
+      if (node.left) {
+        traverse(node.left);
+      }
+
+      visited.push(node.value);
+
+      if (node.right) {
+        traverse(node.right);
+      }
+    }
+
+    traverse(current);
+
+    return visited;
+  }
+}   // class closing bracket
+
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Java - BST
+Here is an example of a program that creates and traverses a binary search tree in Java
+```java
+class Node {
+    int data;
+    Node left, right;
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+class BinaryTree {
+    Node root;
+
+    void insert(int data) {
+        root = insertRec(root, data);
+    }
+
+    Node insertRec(Node root, int data) {
+        if (root == null) {
+            root = new Node(data);
+            return root;
+        }
+        if (data < root.data)
+            root.left = insertRec(root.left, data);
+        else if (data > root.data)
+            root.right = insertRec(root.right, data);
+        return root;
+    }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+    void inorder() {
+        inorderRec(root);
+    }
+
+    void inorderRec(Node root) {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.println(root.data);
+            inorderRec(root.right);
+        }
+    }
+} // closing bracket for the BinaryTree class
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        BinaryTree tree = new BinaryTree();
+        int arr[] = {8, 3, 10, 1, 6, 14, 4, 7, 13};
+        for (int i = 0; i < arr.length; i++)
+            tree.insert(arr[i]);
+        tree.inorder();
+    }
+}
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Python - BST
+Here is an example of a program that creates and traverses a binary search tree in Python
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+def insert(root, data):
+    if root is None:
+        return Node(data)
+    else:
+        if data < root.data:
+            root.left = insert(root.left, data)
+        else:
+            root.right = insert(root.right, data)
+    return root
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```python
+
+def inorder(root):
+    if root:
+        inorder(root.left)
+        print(root.data)
+        inorder(root.right)
+
+root = None
+arr = [8, 3, 10, 1, 6, 14, 4, 7, 13]
+for i in arr:
+    root = insert(root, i)
+inorder(root)
+```
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Binary Tree - Heaps
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### C++ - maxheap
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+
+using namespace std;
+
+void printMaxHeap(priority_queue<int> maxHeap) {
+    while (!maxHeap.empty()) {
+        cout << maxHeap.top() << " ";
+        maxHeap.pop();
+    }
+    cout << endl;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code: 
+```cpp
+
+int main() {
+    priority_queue<int> maxHeap;
+
+    maxHeap.push(10);
+    maxHeap.push(30);
+    maxHeap.push(20);
+    maxHeap.push(50);
+
+    cout << "Max heap: ";
+    printMaxHeap(maxHeap);
+
+    return 0;
+}
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### C++ priority_queue container
+- [`priority_queue` is a container adapter in C++ that provides constant time lookup of the largest (by default) element, at the expense of logarithmic insertion and extraction](https://en.cppreference.com/w/cpp/container/priority_queue)[<sup>1</sup>](https://en.cppreference.com/w/cpp/container/priority_queue). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[It is implemented using a heap data structure and can be used with an array or vector as an internal structure](https://www.geeksforgeeks.org/priority-queue-in-cpp-stl/)[<sup>2</sup>](https://www.geeksforgeeks.org/priority-queue-in-cpp-stl/).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+-  A user-provided `Compare` can be supplied to change the ordering. [For example, using `std::greater<T>` would cause the smallest element to appear as the top](https://en.cppreference.com/w/cpp/container/priority_queue)[<sup>1</sup>](https://en.cppreference.com/w/cpp/container/priority_queue)
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[The `priority_queue` class has several methods such as `push()`, `pop()`, and `top()` that allow you to add elements, remove elements, and access the top element of the queue](https://www.geeksforgeeks.org/priority-queue-in-cpp-stl/)[<sup>2</sup>](https://www.geeksforgeeks.org/priority-queue-in-cpp-stl/).
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Javascript - maxheap
+```js
+class MaxHeap {
+  constructor() {
+    this.heap = [];
+  }
+
+  insert(value) {
+    this.heap.push(value);
+    this.bubbleUp();
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+  extractMax() {
+    const max = this.heap[0];
+    const end = this.heap.pop();
+
+    if (this.heap.length > 0) {
+      this.heap[0] = end;
+      this.bubbleDown();
+    }
+
+    return max;
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+  bubbleUp() {
+    let index = this.heap.length - 1;
+
+    while (index > 0) {
+      const element = this.heap[index];
+      const parentIndex = Math.floor((index - 1) / 2);
+      const parent = this.heap[parentIndex];
+
+      if (element <= parent) break;
+
+      this.heap[index] = parent;
+      this.heap[parentIndex] = element;
+      index = parentIndex;
+    }
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js  
+bubbleDown() {
+    let index = 0;
+    const length = this.heap.length;
+    const element = this.heap[0];
+
+    while (true) {
+      const leftChildIndex = 2 * index + 1;
+      const rightChildIndex = 2 * index + 2;
+      let leftChild, rightChild;
+      let swap = null;
+
+      if (leftChildIndex < length) {
+        leftChild = this.heap[leftChildIndex];
+        if (leftChild > element) {
+          swap = leftChildIndex;
+        }
+      }
+
+      if (rightChildIndex < length) {
+        rightChild = this.heap[rightChildIndex];
+        if (
+          (swap === null && rightChild > element) ||
+          (swap !== null && rightChild > leftChild)
+        ) {
+          swap = rightChildIndex;
+        }
+      }
+
+      if (swap === null) break;
+
+      this.heap[index] = this.heap[swap];
+      this.heap[swap] = element;
+      index = swap;
+    }
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+```js
+
+const maxHeap = new MaxHeap();
+
+maxHeap.insert(10);
+maxHeap.insert(30);
+maxHeap.insert(20);
+maxHeap.insert(50);
+
+console.log("Max heap:", maxHeap.heap);
+
+```
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Java - maxheap
+```java
+import java.util.PriorityQueue;
+
+public class MaxHeapExample {
+    public static void main(String[] args) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
+
+        maxHeap.add(10);
+        maxHeap.add(30);
+        maxHeap.add(20);
+        maxHeap.add(50);
+
+        System.out.print("Max heap: ");
+        while (!maxHeap.isEmpty()) {
+            System.out.print(maxHeap.poll() + " ");
+        }
+        System.out.println();
+    }
+}
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Java - PriorityQueue class
+
+- `PriorityQueue` is a class in Java that provides the functionality of a priority queue data structure.
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[A priority queue is a special type of queue in which each element is associated with a priority value and elements are served based on their priority](https://www.geeksforgeeks.org/priority-queue-class-in-java/)[<sup>1</sup>](https://www.geeksforgeeks.org/priority-queue-class-in-java/).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- [The elements of the priority queue are ordered according to their natural ordering, or by a `Comparator` provided at queue construction time, depending on which constructor is used](https://www.geeksforgeeks.org/priority-queue-class-in-java/)[<sup>1</sup>](https://www.geeksforgeeks.org/priority-queue-class-in-java/).
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[The `PriorityQueue` class has several methods such as `add()`, `poll()`, and `peek()` that allow you to add elements, remove elements, and access the top element of the queue](https://www.geeksforgeeks.org/priority-queue-class-in-java/)[<sup>1</sup>](https://www.geeksforgeeks.org/priority-queue-class-in-java/).
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Python - maxheap
+```python
+import heapq
+
+max_heap = []
+
+heapq.heappush(max_heap, -10)
+heapq.heappush(max_heap, -30)
+heapq.heappush(max_heap, -20)
+heapq.heappush(max_heap, -50)
+
+print("Max heap:", [-x for x in max_heap])
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- In this example, the contents of the max heap are stored in the `max_heap` list, with the negative of each value inserted in order to make the heap a max heap. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The `heapq.heappush()` function is used to insert values into the heap, and the 
+> `[-x for x in max_heap]` 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->expression is used to print out the contents of the heap as a list of positive values in descending order.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Python - heapq module
+
+- [`heapq`  is a module that provides an implementation of the heap queue algorithm, also known as the priority queue algorithm](https://docs.python.org/3/library/heapq.html) [<sup>1</sup>](https://docs.python.org/3/library/heapq.html). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[This module provides a way to create and manipulate a heap data structure, which is a binary tree where every parent node has a value less than or equal to any of its children](https://docs.python.org/3/library/heapq.html) [<sup>1</sup>](https://docs.python.org/3/library/heapq.html).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- [The  `heapq`  module provides various functions to perform operations on heaps, such as  `heappush()` ,  `heappop()` ,  `heappushpop()` , and  `heapify() `](https://www.geeksforgeeks.org/heap-queue-or-heapq-in-python/) [<sup>2</sup>](https://www.geeksforgeeks.org/heap-queue-or-heapq-in-python/). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[These functions allow you to efficiently add and remove elements from a heap while maintaining the heap invariant](https://www.geeksforgeeks.org/heap-queue-or-heapq-in-python/) [<sup>2</sup>](https://www.geeksforgeeks.org/heap-queue-or-heapq-in-python/).
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Graphs - Shortest Path
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### C++ - Dijkstra
+Here is an example of a program in C++ that uses a graph to find the shortest distance between two nodes using *Dijkstra’s algorithm*:
+```cpp
+#include <iostream>
+#include <queue>
+#include <vector>
+using namespace std;
+
+typedef pair<int, int> pii;
+
+const int MAXN = 100005;
+vector<pii> adj[MAXN];
+int dist[MAXN];
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```cpp
+void dijkstra(int s) {
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    pq.push({0, s});
+    while (!pq.empty()) {
+        int d = pq.top().first;
+        int u = pq.top().second;
+        pq.pop();
+        if (dist[u] != -1) continue;
+        dist[u] = d;
+        for (auto &e : adj[u]) {
+            int v = e.first;
+            int w = e.second;
+            if (dist[v] == -1) pq.push({d + w, v});
+        }
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+``` cpp
+int main() {
+    int n, m; cin >> n >> m;
+    for (int i = 0; i < m; i++) {
+        int u, v, w; cin >> u >> v >> w;
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
+    }
+    memset(dist, -1, sizeof(dist));
+    dijkstra(1);
+    for (int i = 1; i <= n; i++)
+        cout << dist[i] << ' ';
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- This program reads in the number of nodes `n` and the number of edges `m` in the graph. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Then it reads in `m` lines where each line contains three integers `u`, `v`, and `w` representing an edge between nodes `u` and `v` with weight `w`. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->The program then runs Dijkstra’s algorithm starting from node `1` and prints out the shortest distance from node `1` to all other nodes.
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### JavaScript - Dijkstra
+
+```javascript
+function dijkstra(graph, start) {
+    let distances = {};
+    for (let vertex in graph)
+        distances[vertex] = Infinity;
+    distances[start] = 0;
+    let pq = new PriorityQueue();
+    pq.enqueue([start, 0]);
+    while (!pq.isEmpty()) {
+        let [currentVertex, currentDistance] = pq.dequeue();
+        if (currentDistance > distances[currentVertex])
+            continue;
+        for (let neighbor in graph[currentVertex]) {
+            let distance = currentDistance + graph[currentVertex][neighbor];
+            if (distance < distances[neighbor]) {
+                distances[neighbor] = distance;
+                pq.enqueue([neighbor, distance]);
+            }
+        }
+    }
+    return distances;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+class PriorityQueue {
+    constructor() {
+        this.values = [];
+    }
+
+    enqueue(val) {
+        this.values.push(val);
+        this.sort();
+    }
+
+    dequeue() {
+        return this.values.shift();
+    }
+
+    sort() {
+        this.values.sort((a, b) => a[1] - b[1]);
+    }
+
+    isEmpty() {
+        return this.values.length === 0;
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+
+```js
+let graph = {
+    'A': {'B': 2, 'C': 4},
+    'B': {'A': 2, 'C': 1, 'D': 4},
+    'C': {'A': 4, 'B': 1, 'D': 2},
+    'D': {'B': 4, 'C': 2}
+};
+
+console.log(dijkstra(graph, 'A'));
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- This program defines a `graph` as an object where the keys are the nodes and the values are objects representing the edges from that node to its neighbors with their corresponding weights. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The program then runs Dijkstra’s algorithm starting from node `'A'` and prints out the shortest distance from node `'A'` to all other nodes.
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Java - Dijkstra
+Here is an example of a program in Java that uses a graph to find the shortest distance between two nodes using Dijkstra’s algorithm
+
+```java
+import java.util.*;
+
+class Graph {
+    private int numVertices;
+    private LinkedList<Pair<Integer, Integer>>[] adjList;
+
+    Graph(int numVertices) {
+        this.numVertices = numVertices;
+        adjList = new LinkedList[numVertices];
+        for (int i = 0; i < numVertices; i++)
+            adjList[i] = new LinkedList<>();
+    }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+    void addEdge(int src, int dest, int weight) {
+        adjList[src].add(new Pair<>(dest, weight));
+        adjList[dest].add(new Pair<>(src, weight));
+    }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+    int[] dijkstra(int startVertex) {
+        boolean[] visited = new boolean[numVertices];
+        int[] distances = new int[numVertices];
+        Arrays.fill(distances, Integer.MAX_VALUE);
+        distances[startVertex] = 0;
+        PriorityQueue<Pair<Integer, Integer>> pq = new PriorityQueue<>(numVertices, new Comparator<Pair<Integer, Integer>>() {
+            @Override
+            public int compare(Pair<Integer, Integer> p1, Pair<Integer, Integer> p2) {
+                return p1.getValue() - p2.getValue();
+            }
+        });
+        pq.offer(new Pair<>(startVertex, 0));
+        while (!pq.isEmpty()) {
+            Pair<Integer, Integer> pair = pq.poll();
+            int vertex = pair.getKey();
+            visited[vertex] = true;
+            for (Pair<Integer, Integer> neighbor : adjList[vertex]) {
+                if (!visited[neighbor.getKey()]) {
+                    int newDistance = distances[vertex] + neighbor.getValue();
+                    if (newDistance < distances[neighbor.getKey()]) {
+                        pq.offer(new Pair<>(neighbor.getKey(), newDistance));
+                        distances[neighbor.getKey()] = newDistance;
+                    }
+                }
+            }
+        }
+        return distances;
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+```java
+
+public class Main {
+    public static void main(String[] args) {
+        Graph graph = new Graph(4);
+        graph.addEdge(0, 1, 2);
+        graph.addEdge(0, 2, 4);
+        graph.addEdge(1, 2, 1);
+        graph.addEdge(1, 3, 4);
+        graph.addEdge(2, 3, 2);
+        int[] distances = graph.dijkstra(0);
+        System.out.println(Arrays.toString(distances));
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- This program creates a `Graph` class that represents a weighted undirected graph. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The `Graph` class has a method `dijkstra` that takes in a starting vertex and returns an array of the shortest distances from the starting vertex to all other vertices in the graph. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->The program creates a `Graph` object with `4` vertices and adds edges between the vertices with their corresponding weights. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->The program then runs Dijkstra’s algorithm starting from vertex `0` and prints out the shortest distance from vertex `0` to all other vertices.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Java - Pair class
+
+- [Java provides a `Pair` class that can be used to store values in a key-value pair combination](https://www.javatpoint.com/java-pair) [<sup>1</sup>](https://www.javatpoint.com/java-pair). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->This class is available in the  `javafx.util`  package [<sup>2</sup>](https://www.baeldung.com/java-pairs). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->[You can create an instance of the `Pair` class by providing a key and its corresponding value to the constructor](https://www.baeldung.com/java-pairs) [<sup>2</sup>](https://www.baeldung.com/java-pairs).
+
+For example:
+
+```java
+Pair<Integer, String> pair = new Pair<>(1, "One");
+Integer key = pair.getKey();
+String value = pair.getValue();
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Java - LinkedList class
+
+- [The `LinkedList` class in Java is a part of the Collection framework present in the  `java.util`  package](https://www.geeksforgeeks.org/linked-list-in-java/) [<sup>1</sup>](https://www.geeksforgeeks.org/linked-list-in-java/). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[It is an implementation of the  `List`  and  `Deque`  interfaces](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html) [<sup>2</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->[This class uses a doubly-linked list data structure to store its elements](https://www.developer.com/java/java-linkedlist-class/) [<sup>3</sup>](https://www.developer.com/java/java-linkedlist-class/).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- [The `LinkedList` class provides all optional list operations and permits all elements, including  `null`](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html) [<sup>2</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[Operations that index into the list will traverse the list from the beginning or the end, whichever is closer to the specified index](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html) [<sup>2</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html).
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Python - Dijkstra
+Here is an example of a program in Python that uses a graph to find the shortest distance between two nodes using Dijkstra’s algorithm
+
+```python
+import heapq
+
+def dijkstra(graph, start):
+    distances = {vertex: float('infinity') for vertex in graph}
+    distances[start] = 0
+    pq = [(0, start)]
+    while len(pq) > 0:
+        current_distance, current_vertex = heapq.heappop(pq)
+        if current_distance > distances[current_vertex]:
+            continue
+        for neighbor, weight in graph[current_vertex].items():
+            distance = current_distance + weight
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(pq, (distance, neighbor))
+    return distances
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+```python
+graph = {
+    'A': {'B': 2, 'C': 4},
+    'B': {'A': 2, 'C': 1, 'D': 4},
+    'C': {'A': 4, 'B': 1, 'D': 2},
+    'D': {'B': 4, 'C': 2}
+}
+
+print(dijkstra(graph, 'A'))
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- This program defines a `graph` as a dictionary where the keys are the nodes and the values are dictionaries representing the edges from that node to its neighbors with their corresponding weights. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The program then runs Dijkstra’s algorithm starting from node `'A'` and prints out the shortest distance from node `'A'` to all other nodes.
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Graphs - Minimum Spanning Tree
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### C++ - Kruskal MST
+Here is an example of a program in C++ that uses a graph to find the minimum spanning tree using *Kruskal’s algorithm*
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+const int MAXN = 100005;
+int parent[MAXN], size[MAXN];
+
+struct Edge {
+    int u, v, w;
+    bool operator<(const Edge &e) const {
+        return w < e.w;
+    }
+};
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```cpp
+
+int find(int x) {
+    if (x == parent[x]) return x;
+    return parent[x] = find(parent[x]);
+}
+
+void unite(int x, int y) {
+    x = find(x), y = find(y);
+    if (x == y) return;
+    if (size[x] < size[y]) swap(x, y);
+    parent[y] = x;
+    size[x] += size[y];
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+
+```cpp
+int main() {
+    int n, m; cin >> n >> m;
+    for (int i = 1; i <= n; i++)
+        parent[i] = i, size[i] = 1;
+    vector<Edge> edges(m);
+    for (int i = 0; i < m; i++)
+        cin >> edges[i].u >> edges[i].v >> edges[i].w;
+    sort(edges.begin(), edges.end());
+    int ans = 0;
+    for (auto &e : edges) {
+        if (find(e.u) != find(e.v)) {
+            unite(e.u, e.v);
+            ans += e.w;
+        }
+    }
+    cout << ans << endl;
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- This program reads in the number of nodes `n` and the number of edges `m` in the graph. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Then it reads in `m` lines where each line contains three integers `u`, `v`, and `w` representing an edge between nodes `u` and `v` with weight `w`. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->The program then runs Kruskal’s algorithm to find the minimum spanning tree of the graph and prints out the total weight of the minimum spanning tree.
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### JavaScript - Prim MST
+Here's an example program in JavaScript that uses graphs with methods for minimum spanning tree
+```js
+class Graph {
+  constructor(numVertices) {
+    this.numVertices = numVertices;
+    this.adjList = new Map();
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+  addEdge(v1, v2, weight) {
+    if (!this.adjList.has(v1)) {
+      this.adjList.set(v1, []);
+    }
+    if (!this.adjList.has(v2)) {
+      this.adjList.set(v2, []);
+    }
+    this.adjList.get(v1).push({ v: v2, w: weight });
+    this.adjList.get(v2).push({ v: v1, w: weight });
+  }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+  primMST() {
+    const inMST = new Array(this.numVertices).fill(false);
+    const weights = new Array(this.numVertices).fill(Number.MAX_VALUE);
+    const parent = new Array(this.numVertices).fill(-1);
+
+    const cmp = (a, b) => a.w - b.w;
+    const pq = new PriorityQueue(cmp);
+    pq.enqueue({ v: 0, w: 0 });
+    weights[0] = 0;
+
+    while (!pq.isEmpty()) {
+      const { v: u } = pq.dequeue();
+
+      if (inMST[u]) {
+        continue;
+      }
+
+      inMST[u] = true;
+
+      const neighbors = this.adjList.get(u);
+
+      for (const { v, w } of neighbors) {
+        if (!inMST[v] && weights[v] > w) {
+          weights[v] = w;
+          parent[v] = u;
+          pq.enqueue({ v, w });
+        }
+      }
+    }
+
+    console.log("Minimum Spanning Tree:");
+    for (let i = 1; i < this.numVertices; i++) {
+      console.log(parent[i], "-", i, ":", weights[i]);
+    }
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+class PriorityQueue {
+  constructor(compareFunc) {
+    this.queue = [];
+    this.compareFunc = compareFunc;
+  }
+
+  enqueue(item) {
+    this.queue.push(item);
+    this.queue.sort(this.compareFunc);
+  }
+
+  dequeue() {
+    return this.queue.shift();
+  }
+
+  isEmpty() {
+    return this.queue.length === 0;
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+```js
+
+// Example usage
+const g = new Graph(5);
+g.addEdge(0, 1, 2);
+g.addEdge(0, 3, 6);
+g.addEdge(1, 2, 3);
+g.addEdge(1, 3, 8);
+g.addEdge(1, 4, 5);
+g.addEdge(2, 4, 7);
+g.addEdge(3, 4, 9);
+
+g.primMST();
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- In this example, the `Graph` class represents an undirected graph using an adjacency list. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The `addEdge` method is used to add edges to the graph, where `v1` and `v2` are the vertices to connect, and `weight` is the weight of the edge. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->The `primMST` method uses Prim's algorithm to find the minimum spanning tree of the graph.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- A `PriorityQueue` class is used to implement the priority queue used by Prim's algorithm. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The `enqueue`, `dequeue`, and `isEmpty` methods of the `PriorityQueue` class are used to add and remove elements from the priority queue. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Finally, an example usage of the `Graph` class is provided to demonstrate how to add edges and find the minimum spanning tree.
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Java - Prim MST
+
+Here's an example program in Java that uses graphs with methods for minimum spanning tree
+
+```java
+import java.util.*;
+
+class Graph {
+    private int numVertices;
+    private Map<Integer, List<Edge>> adjList;
+
+    public Graph(int numVertices) {
+        this.numVertices = numVertices;
+        this.adjList = new HashMap<>();
+        for (int i = 0; i < numVertices; i++) {
+            adjList.put(i, new ArrayList<>());
+        }
+    }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+    public void addEdge(int v1, int v2, int weight) {
+        Edge e1 = new Edge(v2, weight);
+        Edge e2 = new Edge(v1, weight);
+        adjList.get(v1).add(e1);
+        adjList.get(v2).add(e2);
+    }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+
+    public List<Edge> primMST() {
+        boolean[] inMST = new boolean[numVertices];
+        int[] parent = new int[numVertices];
+        int[] weights = new int[numVertices];
+        Arrays.fill(weights, Integer.MAX_VALUE);
+        PriorityQueue<Edge> pq = new PriorityQueue<>();
+        pq.add(new Edge(0, 0));
+        weights[0] = 0;
+
+        while (!pq.isEmpty()) {
+            Edge curr = pq.poll();
+            int u = curr.v;
+            if (inMST[u]) {
+                continue;
+            }
+            inMST[u] = true;
+            List<Edge> neighbors = adjList.get(u);
+            for (Edge neighbor : neighbors) {
+                int v = neighbor.v;
+                int w = neighbor.w;
+                if (!inMST[v] && weights[v] > w) {
+                    weights[v] = w;
+                    parent[v] = u;
+                    pq.add(new Edge(v, w));
+                }
+            }
+        }
+
+        List<Edge> mst = new ArrayList<>();
+        for (int i = 1; i < numVertices; i++) {
+            mst.add(new Edge(i, parent[i], weights[i]));
+        }
+        return mst;
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+
+class Edge implements Comparable<Edge> {
+    int v;
+    int w;
+
+    public Edge(int v, int w) {
+        this.v = v;
+        this.w = w;
+    }
+
+    public Edge(int v, int u, int w) {
+        this.v = v;
+        this.w = w;
+    }
+
+    @Override
+    public int compareTo(Edge other) {
+        return this.w - other.w;
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+```java
+// Example usage
+public class Main {
+    public static void main(String[] args) {
+        Graph g = new Graph(5);
+        g.addEdge(0, 1, 2);
+        g.addEdge(0, 3, 6);
+        g.addEdge(1, 2, 3);
+        g.addEdge(1, 3, 8);
+        g.addEdge(1, 4, 5);
+        g.addEdge(2, 4, 7);
+        g.addEdge(3, 4, 9);
+
+        List<Edge> mst = g.primMST();
+        System.out.println("Minimum Spanning Tree:");
+        for (Edge edge : mst) {
+            System.out.println(edge.v + " - " + edge.u + ": " + edge.w);
+        }
+    }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- In this example, the `Graph` class represents an undirected graph using an adjacency list. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The `addEdge` method is used to add edges to the graph, where `v1` and `v2` are the vertices to connect, and `weight` is the weight of the edge. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->The `primMST` method uses Prim's algorithm to find the minimum spanning tree of the graph.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Java - List interface
+
+- [`List`  is an interface in Java that extends the  `Collection`  interface](https://www.simplilearn.com/tutorials/java-tutorial/list-in-java) [<sup> 1 </sup>](https://www.simplilearn.com/tutorials/java-tutorial/list-in-java). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[It is a part of the  `java.util`  package](https://www.simplilearn.com/tutorials/java-tutorial/list-in-java) [<sup>1</sup>](https://www.simplilearn.com/tutorials/java-tutorial/list-in-java). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->[The  `List`  interface provides an ordered collection (also known as a sequence) where the user has precise control over where in the list each element is inserted](https://docs.oracle.com/javase/8/docs/api/java/util/List.html) [<sup>2</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/List.html).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- [The   `List`   interface provides methods for positional (indexed) access to list elements, search for elements in the list, and efficient insertion and removal of multiple elements at an arbitrary point in the list](https://docs.oracle.com/javase/8/docs/api/java/util/List.html) [<sup>2</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/List.html). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[Classes that implement the  `List`  interface include  `ArrayList` ,  `LinkedList` ,  `Vector` ,  and  `Stack` ](https://www.simplilearn.com/tutorials/java-tutorial/list-in-java) [<sup> 1 </sup>](https://www.simplilearn.com/tutorials/java-tutorial/list-in-java).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Java - Map interface
+
+- [`Map`  is an interface in Java that maps keys to values](https://docs.oracle.com/javase/7/docs/api/java/util/Map.html) [<sup>1 </sup>](https://docs.oracle.com/javase/7/docs/api/java/util/Map.html). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[A map cannot contain duplicate keys; each key can map to at most one value](https://docs.oracle.com/javase/7/docs/api/java/util/Map.html) [<sup>1</sup>](https://docs.oracle.com/javase/7/docs/api/java/util/Map.html). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->[This interface takes the place of the  `Dictionary`  class, which was a totally abstract class rather than an interface](https://docs.oracle.com/javase/7/docs/api/java/util/Map.html) [<sup>1</sup>](https://docs.oracle.com/javase/7/docs/api/java/util/Map.html).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- [The  `Map`  interface provides three collection views, which allow a map’s contents to be viewed as a set of keys, collection of values, or set of key-value mappings](https://docs.oracle.com/javase/7/docs/api/java/util/Map.html) [<sup>1</sup>](https://docs.oracle.com/javase/7/docs/api/java/util/Map.html).
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[Classes that implement the  `Map`  interface include  `HashMap` ,  `LinkedHashMap` ,  and  `TreeMap` ](https://www.scaler.com/topics/map-interface-in-java/) [<sup>2</sup>](https://www.scaler.com/topics/map-interface-in-java/).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Java - Comparable interface
+
+- [The  `Comparable`  interface in Java is used to impose a total ordering on the objects of each class that implements it](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html) [<sup>1</sup>](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[This ordering is referred to as the class’s natural ordering, and the class’s  `compareTo`  method is referred to as its natural comparison method](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html) [<sup>1</sup>](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- [The  `Comparable`  interface contains only one method named  `compareTo(Object)` ](https://www.javatpoint.com/Comparable-interface-in-collection-framework) [<sup>2</sup>](https://www.javatpoint.com/Comparable-interface-in-collection-framework). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[This method compares this object with the specified object for order and returns a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html) [<sup>1</sup>](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html).
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Python - Prim MST
+```python
+import heapq
+
+class Graph:
+    def __init__(self, num_vertices):
+        self.num_vertices = num_vertices
+        self.adj_list = [[] for _ in range(num_vertices)]
+
+    def add_edge(self, v1, v2, weight):
+        self.adj_list[v1].append((v2, weight))
+        self.adj_list[v2].append((v1, weight))
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```python
+    def prim_mst(self):
+        in_mst = [False] * self.num_vertices
+        parent = [-1] * self.num_vertices
+        weights = [float('inf')] * self.num_vertices
+        pq = [(0, 0)] # (weight, vertex)
+        weights[0] = 0
+
+        while pq:
+            curr_weight, curr_vertex = heapq.heappop(pq)
+            if in_mst[curr_vertex]:
+                continue
+            in_mst[curr_vertex] = True
+            for neighbor, neighbor_weight in self.adj_list[curr_vertex]:
+                if not in_mst[neighbor] and neighbor_weight < weights[neighbor]:
+                    weights[neighbor] = neighbor_weight
+                    parent[neighbor] = curr_vertex
+                    heapq.heappush(pq, (neighbor_weight, neighbor))
+
+        mst = []
+        for i in range(1, self.num_vertices):
+            mst.append((parent[i], i, weights[i]))
+        return mst
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+```python
+# Example usage
+g = Graph(5)
+g.add_edge(0, 1, 2)
+g.add_edge(0, 3, 6)
+g.add_edge(1, 2, 3)
+g.add_edge(1, 3, 8)
+g.add_edge(1, 4, 5)
+g.add_edge(2, 4, 7)
+g.add_edge(3, 4, 9)
+
+mst = g.prim_mst()
+print("Minimum Spanning Tree:")
+for edge in mst:
+    print(f"{edge[0]} - {edge[1]}: {edge[2]}")
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- In this example, the `Graph` class represents an undirected graph using an adjacency list. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The `add_edge` method is used to add edges to the graph, where `v1` and `v2` are the vertices to connect, and `weight` is the weight of the edge. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->The `prim_mst` method uses Prim's algorithm to find the minimum spanning tree of the graph. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->A priority queue is used to keep track of the edges with the minimum weight.
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Once all vertices have been visited, the minimum spanning tree is returned as a list of edges, where each edge is represented as a tuple of the form `(v1, v2, weight)`.
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Graphs - Topological Sort
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### C++ - Kahn's Toposort
+here is an example program in C++ that uses graphs with methods for topological sort
+```cpp
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+class Graph {
+private:
+    int num_vertices;
+    vector<vector<int>> adj_list;
+    vector<int> in_degree;
+
+public:
+    Graph(int n) : num_vertices(n), adj_list(n), in_degree(n) {}
+
+    void add_edge(int v1, int v2) {
+        adj_list[v1].push_back(v2);
+        in_degree[v2]++;
+    }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```c++
+    vector<int> topological_sort() {
+        vector<int> result;
+        queue<int> q;
+
+        for (int i = 0; i < num_vertices; i++) {
+            if (in_degree[i] == 0) {
+                q.push(i);
+            }
+        }
+
+        while (!q.empty()) {
+            int curr_vertex = q.front();
+            q.pop();
+            result.push_back(curr_vertex);
+
+            for (int neighbor : adj_list[curr_vertex]) {
+                in_degree[neighbor]--;
+                if (in_degree[neighbor] == 0) {
+                    q.push(neighbor);
+                }
+            }
+        }
+
+        return result;
+    }
+}; // end of class Graph
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+```cpp
+int main() {
+    Graph g(6);
+    g.add_edge(0, 1);
+    g.add_edge(0, 2);
+    g.add_edge(1, 3);
+    g.add_edge(2, 3);
+    g.add_edge(3, 4);
+    g.add_edge(3, 5);
+
+    vector<int> sorted = g.topological_sort();
+
+    cout << "Topological Sort: ";
+    for (int vertex : sorted) {
+        cout << vertex << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- In this example, the `Graph` class represents a directed graph using an adjacency list. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The `add_edge` method is used to add edges to the graph. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->The `topological_sort` method uses Kahn's algorithm to perform a topological sort of the vertices in the graph.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- A queue is used to keep track of vertices with no incoming edges, and each time a vertex is removed from the queue, its neighbors have their incoming edges decremented. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Once all vertices have been visited, the topologically sorted list is returned. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->The `main` function creates a `Graph` object, adds edges to it, and then performs a topological sort.
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Javascript - Kahn's Toposort
+
+here's an example program in JavaScript that uses graphs with methods for topological sort
+```js
+class Graph {
+  constructor(numVertices) {
+    this.numVertices = numVertices;
+    this.adjList = new Array(numVertices).fill(null).map(() => []);
+    this.inDegree = new Array(numVertices).fill(0);
+  }
+
+  addEdge(v1, v2) {
+    this.adjList[v1].push(v2);
+    this.inDegree[v2]++;
+  }
+  ```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+  topologicalSort() {
+    const result = [];
+    const q = [];
+
+    for (let i = 0; i < this.numVertices; i++) {
+      if (this.inDegree[i] === 0) {
+        q.push(i);
+      }
+    }
+
+    while (q.length > 0) {
+      const currVertex = q.shift();
+      result.push(currVertex);
+
+      for (const neighbor of this.adjList[currVertex]) {
+        this.inDegree[neighbor]--;
+
+        if (this.inDegree[neighbor] === 0) {
+          q.push(neighbor);
+        }
+      }
+    }
+
+    return result;
+  }
+}
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver Code:
+```js
+// example usage:
+const g = new Graph(6);
+g.addEdge(0, 1);
+g.addEdge(0, 2);
+g.addEdge(1, 3);
+g.addEdge(2, 3);
+g.addEdge(3, 4);
+g.addEdge(3, 5);
+
+const sorted = g.topologicalSort();
+
+console.log(`Topological Sort: ${sorted.join(' ')}`);
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- In this example, the `Graph` class represents a directed graph using an adjacency list. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->The `addEdge` method is used to add edges to the graph. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->The `topologicalSort` method uses Kahn's algorithm to perform a topological sort of the vertices in the graph.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- A queue is used to keep track of vertices with no incoming edges, and each time a vertex is removed from the queue, its neighbors have their incoming edges decremented. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Once all vertices have been visited, the topologically sorted list is returned. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->The example usage at the bottom creates a `Graph` object, adds edges to it, and then performs a topological sort.
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Java - Kahn's Toposort
+Here is an example program in Java that uses graphs with methods for topological sort
+```java
+import java.util.*;
+
+public class Graph {
+    private int numVertices;
+    private List<List<Integer>> adjList;
+    private int[] inDegree;
+
+    public Graph(int numVertices) {
+        this.numVertices = numVertices;
+        adjList = new ArrayList<>(numVertices);
+        for (int i = 0; i < numVertices; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        inDegree = new int[numVertices];
+    }
+    
+	public void addEdge(int v1, int v2) {
+        adjList.get(v1).add(v2);
+        inDegree[v2]++;
+    }
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+    public List<Integer> topologicalSort() {
+        List<Integer> result = new ArrayList<>();
+        Queue<Integer> queue = new LinkedList<>();
+
+        for (int i = 0; i < numVertices; i++) {
+            if (inDegree[i] == 0) {
+                queue.offer(i);
+            }
+        }
+        while (!queue.isEmpty()) {
+            int currVertex = queue.poll();
+            result.add(currVertex);
+
+            for (int neighbor : adjList.get(currVertex)) {
+                inDegree[neighbor]--;
+
+                if (inDegree[neighbor] == 0) {
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        return result;
+    }
+}
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver Code:
+```java
+public class Main {
+    public static void main(String[] args) {
+        Graph graph = new Graph(6);
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 2);
+        graph.addEdge(1, 3);
+        graph.addEdge(1, 4);
+        graph.addEdge(2, 4);
+        graph.addEdge(3, 5);
+        graph.addEdge(4, 5);
+
+        List<Integer> topSort = graph.topologicalSort();
+        System.out.println("Topologically sorted vertices:");
+        for (int vertex : topSort) {
+            System.out.print(vertex + " ");
+        }
+    }
+}
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+The output of this program should be:
+
+```
+ Topologically sorted vertices:
+0 1 2 3 4 5
+```
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->In this example, we create a `Graph` object with six vertices, add edges between them using the `addEdge` method, and then call the `topologicalSort` method to get the topologically sorted list of vertices. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Finally, we print out the topologically sorted vertices using a for-each loop.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Java - Queue interface
+
+- [The  `Queue`  interface in Java is a collection designed for holding elements prior to processing](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html) [<sup>1</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html).
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[It extends the  `Collection`  interface and is a part of the  `java.util`  package](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html) [<sup>1</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->[Besides basic  `Collection`  operations, queues provide additional insertion, extraction, and inspection operations](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html) [<sup>1</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- [Each of these methods exists in two forms: one throws an exception if the operation fails, the other returns a special value (either  `null`  or  `false` , depending on the operation)](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html) [<sup>1</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[Queues typically, but do not necessarily, order elements in a FIFO (first-in-first-out) manner](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html) [<sup>1</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->[Among the exceptions are priority queues, which order elements according to a supplied comparator or the elements’ natural ordering](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html) [<sup>1</sup>](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html).
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Python - Khan's Toposort
+Here's an example program in Python that uses graphs with methods for topological sort
+```python
+from collections import deque
+
+class Graph:
+    def __init__(self, num_vertices):
+        self.num_vertices = num_vertices
+        self.adj_list = [[] for _ in range(num_vertices)]
+        self.in_degree = [0 for _ in range(num_vertices)]
+
+    def add_edge(self, v1, v2):
+        self.adj_list[v1].append(v2)
+        self.in_degree[v2] += 1
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```python
+    def topological_sort(self):
+        result = []
+        queue = deque()
+
+        for i in range(self.num_vertices):
+            if self.in_degree[i] == 0:
+                queue.append(i)
+
+        while queue:
+            curr_vertex = queue.popleft()
+            result.append(curr_vertex)
+
+            for neighbor in self.adj_list[curr_vertex]:
+                self.in_degree[neighbor] -= 1
+
+                if self.in_degree[neighbor] == 0:
+                    queue.append(neighbor)
+
+        return result
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Driver code:
+```python
+graph = Graph(6)
+graph.add_edge(0, 1)
+graph.add_edge(0, 2)
+graph.add_edge(1, 3)
+graph.add_edge(1, 4)
+graph.add_edge(2, 4)
+graph.add_edge(3, 5)
+graph.add_edge(4, 5)
+
+top_sorted_vertices = graph.topological_sort()
+print("Topologically sorted vertices: ", top_sorted_vertices)
+```
+
+The output of this program should be:
+
+```python
+Topologically sorted vertices: [0, 1, 2, 3, 4, 5]
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- In this example, we create a `Graph` object with six vertices, add edges between them using the `add_edge` method, and then call the `topological_sort` method to get the topologically sorted list of vertices. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Finally, we print out the topologically sorted vertices.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- The  `topological_sort`  method uses Kahn's algorithm to perform a topological sort of the vertices in the graph. 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->A deque is used to keep track of vertices with no incoming edges, and each time a vertex is removed from the deque, its neighbors have their incoming edges decremented.
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Once all vertices have been visited, the topologically sorted list is returned.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Python - deque datatype
+- [In Python, a  `deque`  (short for double-ended queue) is a data type that belongs to the  `collections`  module](https://www.codeleaks.io/deque-in-python-collection-module/) [<sup>1</sup>](https://www.codeleaks.io/deque-in-python-collection-module/). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[It is a generalization of stacks and queues and provides a thread-safe and memory-efficient data structure](https://www.codeleaks.io/deque-in-python-collection-module/) [<sup>1</sup>](https://www.codeleaks.io/deque-in-python-collection-module/). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->[A  `deque`  allows faster append and pop operations from both ends](https://www.codeleaks.io/deque-in-python-collection-module/) [<sup>1</sup>](https://www.codeleaks.io/deque-in-python-collection-module/).
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- [You can use the  `collections.deque`  class to implement a deque in Python](https://www.python-engineer.com/posts/deque-python/) [<sup>2</sup>](https://www.python-engineer.com/posts/deque-python/). 
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->[This class provides various built-in functions to perform operations on the deque, such as  `append()` ,  `pop()` ,  `appendleft()` , and  `popleft()` ](https://www.python-engineer.com/posts/deque-python/) [<sup>2</sup>](https://www.python-engineer.com/posts/deque-python/).
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# finis!
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## References
+
+- https://en.cppreference.com/w/cpp/container/priority_queue
+- https://www.geeksforgeeks.org/priority-queue-in-cpp-stl/
+- https://www.geeksforgeeks.org/priority-queue-class-in-java/
+- https://www.javatpoint.com/java-pair
+- https://www.baeldung.com/java-pairs
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- https://www.geeksforgeeks.org/linked-list-in-java/
+- https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html
+- https://www.developer.com/java/java-linkedlist-class/
+- https://www.simplilearn.com/tutorials/java-tutorial/list-in-java
+- https://docs.oracle.com/javase/8/docs/api/java/util/List.html
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- https://docs.oracle.com/javase/7/docs/api/java/util/Map.html
+- https://www.scaler.com/topics/map-interface-in-java/
+- https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html
+- https://www.javatpoint.com/Comparable-interface-in-collection-framework
+- https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- https://www.codeleaks.io/deque-in-python-collection-module/
+- https://www.python-engineer.com/posts/deque-python/
+- https://docs.python.org/3/library/heapq.html
+- https://www.geeksforgeeks.org/heap-queue-or-heapq-in-python/
+</div></script></section></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+	<script src="plugin/reveal-pointer/pointer.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+	      RevealPointer,
+		  RevealChalkboard, 
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{id: 'toggle-overview',
+				title: 'Toggle overview (O)',
+				icon: '<i class="fa fa-th"></i>',
+				action: 'Reveal.toggleOverview();'
+				},
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"normal"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

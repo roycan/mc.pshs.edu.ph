@@ -8,7 +8,7 @@ July 4, 2024
 ## MEMORANDUM NO. 179
 ### Series of 2024
 
-**TO**: PSHSS OED Personnel, Campus Directors and Division Chiefs
+**TO**: PSHSS OED Personnel, Campus Directors and Division Chiefs  
 **FROM**: RONNALEE N. ORTEZA, PHD.
 Executive Director  
 **SUBJECT**: PSHS System Official Calendar and Email Directory Mailing List
